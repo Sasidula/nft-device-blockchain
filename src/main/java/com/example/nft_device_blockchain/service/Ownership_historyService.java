@@ -25,25 +25,25 @@ public class Ownership_historyService {
         return ownership_history;
     }
 
-    public Optional<Ownership_history> getOwnership_historyById(long id) {
+    public Optional<Ownership_history> getOwnership_historyById(int id) {
         return ownership_historyRepository.findById(id);
     }
 
-    public void deleteOwnership_history(long id) {
+    public void deleteOwnership_history(int id) {
         ownership_historyRepository.deleteById(id);
     }
 
-    public Ownership_history updateOwnership_history(Long id, Ownership_history ownership_history){
-        ownership_history.setOwnershipId(Math.toIntExact(id));
+    public Ownership_history updateOwnership_history(int id, Ownership_history ownership_history){
+        ownership_history.setOwnershipId(id);
         return ownership_historyRepository.save(ownership_history);
     }
 
     public List<Ownership_history> getOwnership_historyByDeviceId(int device_id) {
-        return ownership_historyRepository.findByDevice_id(device_id);
+        return ownership_historyRepository.findByDeviceId(device_id);
     }
 
     public List<Ownership_history> getOwnership_historyByTransaction_hash(String transaction_hash) {
-        return ownership_historyRepository.findByTransaction_hash(transaction_hash);
+        return ownership_historyRepository.findByTransactionHash(transaction_hash);
     }
 
     public List<Ownership_history> getOwnership_historyByPublicKey(String publicKey) {

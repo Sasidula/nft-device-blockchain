@@ -14,8 +14,8 @@ public class Transfer_requests {
     private int request_id;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", referencedColumnName = "device_id")
-    private Devices item;
+    @JoinColumn(name = "device_id", referencedColumnName = "device_id")
+    private Devices devices;
 
     @ManyToOne
     @JoinColumn(name = "requester_id", referencedColumnName = "user_id")
@@ -49,12 +49,12 @@ public class Transfer_requests {
         this.request_id = request_id;
     }
 
-    public Devices getItem() {
-        return item;
+    public Devices getDevices() {
+        return devices;
     }
 
-    public void setItem(Devices item) {
-        this.item = item;
+    public void setDevices(Devices devices) {
+        this.devices = devices;
     }
 
     public Users getSeller() {

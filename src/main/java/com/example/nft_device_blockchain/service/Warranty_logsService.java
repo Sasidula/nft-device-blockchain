@@ -24,20 +24,16 @@ public class Warranty_logsService {
         return warranty_logsRepository.findAll();
     }
 
-    public Optional<Warranty_logs> getWarranty_logsById(long id) {
+    public Optional<Warranty_logs> getWarranty_logsById(int id) {
         return warranty_logsRepository.findById(id);
     }
 
-    public void deleteWarranty_logs(long id) {
+    public void deleteWarranty_logs(int id) {
         warranty_logsRepository.deleteById(id);
     }
 
     public Warranty_logs updateWarranty_logs(Warranty_logs warranty_logs) {
         return warranty_logsRepository.save(warranty_logs);
-    }
-
-    public List<Warranty_logs> getWarranty_logsByDeviceId(int deviceId) {
-        return warranty_logsRepository.findByDeviceId(deviceId);
     }
 
     public List<Warranty_logs> getWarranty_logsByAdded_by(Long id){

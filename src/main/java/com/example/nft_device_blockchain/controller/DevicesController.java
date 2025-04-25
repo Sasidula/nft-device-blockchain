@@ -39,4 +39,51 @@ public class DevicesController {
         devicesService.deleteDevice(id);
     }
 
+    @PutMapping("/{id}")
+    public Devices updateDevice(@PathVariable int id, @RequestBody Devices device) {
+        Optional<Devices> existing = devicesService.getDeviceById(id);
+        if (existing.isPresent()) {
+            device.setDeviceId(id);
+            return devicesService.updateDevice(device);
+        } else {
+            return null;
+        }
+    }
+
+
+    @GetMapping("/nft/{nftTokenId}")
+    public Devices getDeviceByNftTokenId(@PathVariable String nftTokenId) {
+        return devicesService.getDeviceByNftTokenId(nftTokenId);
+    }
+
+    @GetMapping("/serial/{serialNumber}")
+    public List<Devices> getDeviceBySerialNumber(@PathVariable String serialNumber) {
+        return devicesService.getDeviceBySerialNumber(serialNumber);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<Devices> getDeviceByName(@PathVariable String name) {
+        return devicesService.getDeviceByName(name);
+    }
+
+    @GetMapping("/brand/{brand}")
+    public List<Devices> getDeviceByBrand(@PathVariable String brand) {
+        return devicesService.getDeviceByBrand(brand);
+    }
+
+    @GetMapping("/model/{modelNumber}")
+    public List<Devices> getDeviceByModelNumber(@PathVariable String modelNumber) {
+        return devicesService.getDeviceByModelNumber(modelNumber);
+    }
+
+    @GetMapping("/type/{deviceType}")
+    public List<Devices> getDeviceByDeviceType(@PathVariable String deviceType) {
+        return devicesService.getDeviceByDeviceType(deviceType);
+    }
+
+    @GetMapping("/registered/{registeredBy}")
+    public List<Devices> getDeviceByRegisteredBy(@PathVariable String registeredBy) {
+        return devicesService.getDeviceByRegisteredBy(registeredBy);
+    }
+
 }

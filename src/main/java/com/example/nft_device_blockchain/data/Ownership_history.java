@@ -2,6 +2,8 @@ package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "ownership_history")
 public class Ownership_history {
@@ -11,17 +13,23 @@ public class Ownership_history {
     @Column(name = "ownership_id")
     private int ownershipId;
 
-    @Column(name = "device_id")
-    private int device_id;
+    @ManyToOne
+    @JoinColumn(name = "device_id", referencedColumnName = "device_id")
+    private Devices devices;
 
-    @Column(name = "owner_address")
-    private String owner_address;
+    @ManyToOne
+    @JoinColumn(name = "from_user_id", referencedColumnName = "user_id")
+    private Users from_user;
+
+    @ManyToOne
+    @JoinColumn(name = "to_user_id", referencedColumnName = "user_id")
+    private Users to_user;
+
+    @Column(name = "transfer_date")
+    private Date transfer_date;
 
     @Column(name = "transaction_hash")
     private String transaction_hash;
-
-    @Column(name = "created_at")
-    private String created_at;
 
     @Lob
     @Column(name = "public_key", columnDefinition = "TEXT")
@@ -31,14 +39,6 @@ public class Ownership_history {
     @Column(name = "private_key", columnDefinition = "TEXT")
     private String privateKey;
 
-    public int getDevice_id() {
-        return device_id;
-    }
-
-    public void setDevice_id(int device_id) {
-        this.device_id = device_id;
-    }
-
     public int getOwnershipId() {
         return ownershipId;
     }
@@ -47,12 +47,36 @@ public class Ownership_history {
         this.ownershipId = ownershipId;
     }
 
-    public String getOwner_address() {
-        return owner_address;
+    public Devices getDevices() {
+        return devices;
     }
 
-    public void setOwner_address(String owner_address) {
-        this.owner_address = owner_address;
+    public void setDevices(Devices devices) {
+        this.devices = devices;
+    }
+
+    public Users getFrom_user() {
+        return from_user;
+    }
+
+    public void setFrom_user(Users from_user) {
+        this.from_user = from_user;
+    }
+
+    public Users getTo_user() {
+        return to_user;
+    }
+
+    public void setTo_user(Users to_user) {
+        this.to_user = to_user;
+    }
+
+    public Date getTransfer_date() {
+        return transfer_date;
+    }
+
+    public void setTransfer_date(Date transfer_date) {
+        this.transfer_date = transfer_date;
     }
 
     public String getTransaction_hash() {
@@ -61,14 +85,6 @@ public class Ownership_history {
 
     public void setTransaction_hash(String transaction_hash) {
         this.transaction_hash = transaction_hash;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
     }
 
     public String getPublicKey() {

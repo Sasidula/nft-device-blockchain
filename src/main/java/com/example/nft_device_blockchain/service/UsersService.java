@@ -1,11 +1,9 @@
 package com.example.nft_device_blockchain.service;
 
-import com.example.nft_device_blockchain.data.Role;
 import com.example.nft_device_blockchain.data.Users;
 import com.example.nft_device_blockchain.data.UsersRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,7 +19,7 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public Users getUserById(Long userId) {
+    public Users getUserById(int userId) {
         return usersRepository.findById(userId).orElse(null);
     }
 
@@ -33,11 +31,11 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
-    public void deleteUser(Long userId) {
+    public void deleteUser(int userId) {
         usersRepository.deleteById(userId);
     }
 
-    public Users getUserByEmail(String email) {
+    public List<Users> getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
     }
 
@@ -45,24 +43,9 @@ public class UsersService {
         return usersRepository.findByWalletAddress(walletAddress);
     }
 
-    public Users getUserByName(String name) {
+    public List<Users> getUserByName(String name) {
         return usersRepository.findByName(name);
     }
 
-    public Users getUserByRole(Role role) {
-        return usersRepository.findByRole(role);
-    }
-
-    public Users getUserByPassword(String password) {
-        return usersRepository.findByPassword(password);
-    }
-
-    public Users getUserByCreatedAt(Date createdAt) {
-        return usersRepository.findByCreatedAt(createdAt);
-    }
-
-    public Users getUserByUserId(int userId) {
-        return usersRepository.findByUserId(userId);
-    }
 
 }

@@ -2,6 +2,8 @@ package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "devices")
 public class Devices {
@@ -30,7 +32,7 @@ public class Devices {
     private double originalPrice;
 
     @Column(name = "purchase_date")
-    private String purchaseDate;
+    private Date purchaseDate;
 
     @Lob
     @Column(name = "image_blob")
@@ -47,7 +49,7 @@ public class Devices {
     private boolean blacklisted;
 
     @Column(name = "created_at")
-    private String createdAt;
+    private Date createdAt;
 
     public int getDeviceId() {
         return deviceId;
@@ -105,11 +107,11 @@ public class Devices {
         this.originalPrice = originalPrice;
     }
 
-    public String getPurchaseDate() {
+    public Date getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(String purchaseDate) {
+    public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
@@ -145,11 +147,11 @@ public class Devices {
         this.blacklisted = blacklisted;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

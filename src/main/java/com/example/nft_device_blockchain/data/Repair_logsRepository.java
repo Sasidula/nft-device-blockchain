@@ -1,15 +1,21 @@
 package com.example.nft_device_blockchain.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
-public interface Repair_logsRepository extends JpaRepository<Repair_logs, Long> {
-    Iterable<Repair_logs> findByDevice_id(int deviceId);
+public interface Repair_logsRepository extends JpaRepository<Repair_logs, Integer> {
 
-    Iterable<Repair_logs> findByAdded_by(int addedBy);
+    @Query("SELECT r FROM Repair_logs r WHERE r.device_id = ?1")
+    List<Repair_logs> findByDeviceId(int deviceId);
 
-    Iterable<Repair_logs> findByDate(Date date);
+    @Query("SELECT r FROM Repair_logs r WHERE r.added_by = ?1")
+    List<Repair_logs> findByAddedBy(int addedBy);
 
-    Iterable<Repair_logs> findByCenter_name(String centerName);
+    @Query("SELECT r FROM Repair_logs r WHERE r.center_name = ?1")
+    List<Repair_logs> findByCenterName(String centerName);
 }
+
+

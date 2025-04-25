@@ -32,52 +32,37 @@ public class DevicesService {
         devicesRepository.deleteById(id);
     }
 
-    public void updateDevice(Devices device) {
+    public Devices updateDevice(Devices device) {
         devicesRepository.save(device);
+        return device;
     }
 
     public Devices getDeviceByNftTokenId(String nftTokenId) {
         return devicesRepository.findByNftTokenId(nftTokenId);
     }
 
-    public Devices getDeviceBySerialNumber(String serialNumber) {
+    public List<Devices> getDeviceBySerialNumber(String serialNumber) {
         return devicesRepository.findBySerialNumber(serialNumber);
     }
 
-    public Devices getDeviceByName(String name) {
+    public List<Devices> getDeviceByName(String name) {
         return devicesRepository.findByName(name);
     }
 
-    public Devices getDeviceByBrand(String brand) {
+    public List<Devices> getDeviceByBrand(String brand) {
         return devicesRepository.findByBrand(brand);
     }
 
-    public Devices getDeviceByModelNumber(String modelNumber) {
+    public List<Devices> getDeviceByModelNumber(String modelNumber) {
         return devicesRepository.findByModelNumber(modelNumber);
     }
 
-    public Devices getDeviceByDeviceType(String deviceType) {
+    public List<Devices> getDeviceByDeviceType(String deviceType) {
         return devicesRepository.findByDeviceType(deviceType);
     }
 
-    public Devices getDeviceByRegisteredBy(String registeredBy) {
+    public List<Devices> getDeviceByRegisteredBy(String registeredBy) {
         return devicesRepository.findByRegisteredBy(registeredBy);
-    }
-
-    public Devices getDeviceByBlacklisted(boolean blacklisted) {
-        return devicesRepository.findByBlacklisted(blacklisted);
-    }
-
-    public Devices getDeviceByCreatedAt(String createdAt) {
-        return devicesRepository.findByCreatedAt(createdAt);
-    }
-
-    public Devices getDeviceByPurchaseDate(String purchaseDate) {
-        return devicesRepository.findByPurchaseDate(purchaseDate);
-    }
-
-    public Devices getDeviceByOriginalPrice(double originalPrice) {
-        return devicesRepository.findByOriginalPrice(originalPrice);
     }
 
 }
