@@ -11,7 +11,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private int userId;
 
     @Column(name = "wallet_address")
     private String walletAddress;
@@ -40,11 +40,11 @@ public class Users {
         ADMIN
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

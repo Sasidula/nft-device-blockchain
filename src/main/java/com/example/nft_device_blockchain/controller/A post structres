@@ -1,0 +1,86 @@
+post model
+http://localhost:8080/api/model/predict-next-month-price
+{
+  "release_year": 2022,
+  "release_price": 1000,
+  "purchase_date": "2024-01-01"
+}
+
+
+post users
+http://localhost:8080/api/users
+{
+  "walletAddress": "0x1234567890abcdef1234",
+  "email": "newuser@example.com",
+  "name": "New User",
+  "role": "CONSUMER",
+  "password": "testpass123"
+}
+
+
+post tranfer requests
+http://localhost:8080/api/requests
+
+
+post ownership history
+http://localhost:8080/api/history
+{
+  "device_id": 1,
+  "from_user_id": 1,
+  "to_user_id": 2,
+  "transfer_date": "2025-04-10",
+  "transaction_hash": "0xupdatedhash789",
+  "publicKey": "updated-public-key",
+  "privateKey": "updated-private-key"
+}
+
+
+post devices
+http://localhost:8080/api/devices
+{
+  "name": "iPhone 15 Pro",
+  "brand": "Apple",
+  "modelNumber": "A2849",
+  "serialNumber": "SN12345678",
+  "deviceType": "Smartphone",
+  "originalPrice": 999.99,
+  "releaseDate": "2023-09-12T00:00:00.000+00:00",
+  "purchaseDate": "2024-01-10T00:00:00.000+00:00",
+  "imageBlob": null,
+  "nftTokenId": "NFT123456789",
+  "registeredBy": {
+    "userId": 1
+  },
+  "currentOwner": {
+    "userId": 1
+  },
+  "blacklisted": false,
+  "createdAt": "2024-01-10T00:00:00.000+00:00"
+}
+
+post spec
+http://localhost:8080/api/specs
+{
+  "processor": "Apple A17 Pro",
+  "storage": "256GB",
+  "ram": "8GB",
+  "display": "6.1-inch Super Retina XDR",
+  "battery": "3274mAh",
+  "os": "iOS 17",
+  "ports": "USB-C",
+  "camera": "Triple 48MP + 12MP + 12MP",
+  "powerAdapter": "20W USB-C",
+  "deviceId": 1
+}
+
+post warranty
+http://localhost:8080/api/warranties
+{
+  "device": 1,
+  "start_date": "2024-01-01",
+  "end_date": "2025-01-01",
+  "added_by": {
+    "userId": 1
+  },
+  "notes": "1-year warranty for tablet"
+}

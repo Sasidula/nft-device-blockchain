@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:5173")
+@RestController
+@RequestMapping("/api/specs")
 public class SpecController {
 
     private final SpecService specService;
@@ -16,27 +18,27 @@ public class SpecController {
         this.specService = specService;
     }
 
-    @GetMapping("/specs")
+    @GetMapping
     public List<Spec> getAllSpecs() {
         return specService.getAllSpecs();
     }
 
-    @GetMapping("/specs/{id}")
+    @GetMapping("/{id}")
     public Spec getSpecById(@PathVariable int id) {
         return specService.getSpecById(id);
     }
 
-    @PostMapping("/specs")
+    @PostMapping
     public Spec createSpec(@RequestBody Spec spec) {
         return specService.createSpec(spec);
     }
 
-    @PutMapping("/specs/{id}")
+    @PutMapping("/{id}")
     public Spec updateSpec(@PathVariable int id, @RequestBody Spec spec) {
         return specService.updateSpec(id, spec);
     }
 
-    @DeleteMapping("/specs/{id}")
+    @DeleteMapping("/{id}")
     public void deleteSpec(@PathVariable int id) {
         specService.deleteSpec(id);
     }

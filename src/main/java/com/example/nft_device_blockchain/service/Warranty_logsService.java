@@ -36,7 +36,7 @@ public class Warranty_logsService {
         return warranty_logsRepository.save(warranty_logs);
     }
 
-    public List<Warranty_logs> getWarranty_logsByAdded_by(Long id){
+    public List<Warranty_logs> getWarranty_logsByAdded_by(int id){
         return warranty_logsRepository.findByAdded_by(id);
     }
 

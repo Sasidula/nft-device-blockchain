@@ -13,9 +13,8 @@ public class Warranty_logs {
     @Column(name = "warranty_id")
     private int warranty_id;
 
-    @ManyToOne
-    @JoinColumn(name = "device_id", referencedColumnName = "device_id")
-    private Devices device;
+    @Column(name = "device_id")
+    private int device;
 
     @Column(name = "start_date")
     private Date start_date;
@@ -70,11 +69,11 @@ public class Warranty_logs {
         this.notes = notes;
     }
 
-    public Devices getDevice() {
+    public int getDevice() {
         return device;
     }
 
-    public void setDevice(Devices device) {
+    public void setDevice(int device) {
         this.device = device;
     }
 }

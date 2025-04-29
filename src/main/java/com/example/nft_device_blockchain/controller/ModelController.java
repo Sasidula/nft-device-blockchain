@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/model")
 public class ModelController {
 
     @PostMapping("/predict-next-month-price")

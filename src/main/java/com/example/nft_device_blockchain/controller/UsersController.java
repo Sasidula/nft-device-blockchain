@@ -28,7 +28,7 @@ public class UsersController {
     }
 
     @PutMapping("/{userId}")
-    public Users updateUser(@PathVariable Long userId, @RequestBody Users user) {
+    public Users updateUser(@PathVariable int userId, @RequestBody Users user) {
         user.setUserId(userId);
         return usersRepository.save(user);
     }

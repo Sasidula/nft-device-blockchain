@@ -10,7 +10,7 @@ public class Spec {
     @Column(name = "spec_id", nullable = false)
     private int spec_id;
 
-    @Column(name = "device_id", nullable = false)
+    @Column(name = "device_id")
     private int device;
 
     @Column(name = "processor")
@@ -48,11 +48,11 @@ public class Spec {
         this.spec_id = spec_id;
     }
 
-    public int getDeviceId() {
+    public int getDevice() {
         return device;
     }
 
-    public void setDeviceId(int device) {
+    public void setDevice(int device) {
         this.device = device;
     }
 
