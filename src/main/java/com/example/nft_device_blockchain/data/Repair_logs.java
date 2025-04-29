@@ -14,7 +14,11 @@ public class Repair_logs {
     private int repair_id;
 
     @Column(name = "device_id")
-    private int device_id;
+    private int device;
+
+    /*@ManyToOne
+    @JoinColumn(name = "device_id", referencedColumnName = "device_id")
+    private Devices device;*/
 
     @Column(name = "date")
     private Date date;
@@ -37,13 +41,21 @@ public class Repair_logs {
         this.repair_id = repair_id;
     }
 
-    public int getDevice_id() {
-        return device_id;
+    public int getDevice() {
+        return device;
     }
 
-    public void setDevice_id(int device_id) {
-        this.device_id = device_id;
+    public void setDevice(int device) {
+        this.device = device;
     }
+
+    /*public Devices getDevice() {
+        return device;
+    }
+
+    public void setDevice(Devices device) {
+        this.device = device;
+    }*/
 
     public Date getDate() {
         return date;

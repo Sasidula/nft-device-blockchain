@@ -50,6 +50,11 @@ public class DevicesController {
         }
     }
 
+    @GetMapping("/owner/{userId}")
+    public List<Devices> getDevicesByCurrentOwner(@PathVariable int userId) {
+        List<Devices> devices = devicesService.getDevicesByCurrentOwnerId(userId);
+        return devices;
+    }
 
     @GetMapping("/nft/{nftTokenId}")
     public Devices getDeviceByNftTokenId(@PathVariable String nftTokenId) {
@@ -82,7 +87,7 @@ public class DevicesController {
     }
 
     @GetMapping("/registered/{registeredBy}")
-    public List<Devices> getDeviceByRegisteredBy(@PathVariable String registeredBy) {
+    public List<Devices> getDeviceByRegisteredBy(@PathVariable int registeredBy) {
         return devicesService.getDeviceByRegisteredBy(registeredBy);
     }
 

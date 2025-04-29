@@ -1,6 +1,7 @@
 package com.example.nft_device_blockchain.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,5 +19,8 @@ public interface DevicesRepository extends JpaRepository<Devices, Integer> {
 
     List<Devices> findByDeviceType(String deviceType);
 
-    List<Devices> findByRegisteredBy(String registeredBy);
+    @Query("SELECT d FROM Devices d WHERE d.registeredBy = ?1")
+    List<Devices> findByRegisteredBy(int registeredBy);
+
+    List<Devices> findByCurrentOwner_UserId(int currentOwner);
 }

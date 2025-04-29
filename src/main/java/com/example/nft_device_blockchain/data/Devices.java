@@ -2,7 +2,10 @@ package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
 @Table(name = "devices")
@@ -28,8 +31,14 @@ public class Devices {
     @Column(name = "device_type")
     private String deviceType;
 
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Spec> spec = new ArrayList<>();
+
     @Column(name = "original_price")
     private double originalPrice;
+
+    @Column(name = "release_date")
+    private Date releaseDate;
 
     @Column(name = "purchase_date")
     private Date purchaseDate;
@@ -38,12 +47,22 @@ public class Devices {
     @Column(name = "image_blob")
     private byte[] imageBlob;
 
-
     @Column(name = "nft_token_id")
     private String nftTokenId;
 
-    @Column(name = "registered_by")
-    private String registeredBy;
+    @ManyToOne
+    @JoinColumn(name = "registered_by", referencedColumnName = "user_id")
+    private Users registeredBy;
+
+    @ManyToOne
+    @JoinColumn(name = "current_owner_id", referencedColumnName = "user_id")
+    private Users currentOwner;
+
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Repair_logs> repairLogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Warranty_logs> warrantyLogs = new ArrayList<>();
 
     @Column(name = "blacklisted")
     private boolean blacklisted;
@@ -107,6 +126,14 @@ public class Devices {
         this.originalPrice = originalPrice;
     }
 
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public Date getPurchaseDate() {
         return purchaseDate;
     }
@@ -131,11 +158,11 @@ public class Devices {
         this.nftTokenId = nftTokenId;
     }
 
-    public String getRegisteredBy() {
+    public Users getRegisteredBy() {
         return registeredBy;
     }
 
-    public void setRegisteredBy(String registeredBy) {
+    public void setRegisteredBy(Users registeredBy) {
         this.registeredBy = registeredBy;
     }
 
@@ -147,11 +174,35 @@ public class Devices {
         this.blacklisted = blacklisted;
     }
 
+    public Users getCurrentOwner() {
+        return currentOwner;
+    }
+
+    public void setCurrentOwner(Users currentOwner) {
+        this.currentOwner = currentOwner;
+    }
+
+    public List<Repair_logs> getRepairLogs() {
+        return repairLogs;
+    }
+
+    public void setRepairLogs(List<Repair_logs> repairLogs) {
+        this.repairLogs = repairLogs;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<Spec> getSpec() {
+        return spec;
+    }
+
+    public void setSpec(List<Spec> spec) {
+        this.spec = spec;
     }
 }

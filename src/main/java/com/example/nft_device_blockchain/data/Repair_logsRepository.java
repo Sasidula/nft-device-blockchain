@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface Repair_logsRepository extends JpaRepository<Repair_logs, Integer> {
 
-    @Query("SELECT r FROM Repair_logs r WHERE r.device_id = ?1")
+    @Query("SELECT r FROM Repair_logs r WHERE r.device = ?1")
     List<Repair_logs> findByDeviceId(int deviceId);
 
     @Query("SELECT r FROM Repair_logs r WHERE r.added_by = ?1")

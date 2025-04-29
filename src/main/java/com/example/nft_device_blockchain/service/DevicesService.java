@@ -24,6 +24,10 @@ public class DevicesService {
         return devicesRepository.findById(id);
     }
 
+    public List<Devices> getDevicesByCurrentOwnerId(int userId) {
+        return devicesRepository.findByCurrentOwner_UserId(userId);
+    }
+
     public Devices createDevice(Devices device) {
         return devicesRepository.save(device);
     }
@@ -61,7 +65,7 @@ public class DevicesService {
         return devicesRepository.findByDeviceType(deviceType);
     }
 
-    public List<Devices> getDeviceByRegisteredBy(String registeredBy) {
+    public List<Devices> getDeviceByRegisteredBy(int registeredBy) {
         return devicesRepository.findByRegisteredBy(registeredBy);
     }
 
