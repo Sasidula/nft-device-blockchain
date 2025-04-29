@@ -15,6 +15,5 @@ public class DevicesDTO {
     private String nftTokenId;
     private Long registeredById;
     private Long currentOwnerId;
-    private int warrantyId;
     private boolean blacklisted;
 }
