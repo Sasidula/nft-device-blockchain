@@ -1,0 +1,76 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f3f4f6; /* gray-100 */
+    background-color: #ffffff;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* gap-8 */
+}
+
+.logo {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 700;
+    color: #111827; /* text-gray-900 */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563; /* text-gray-600 */
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #0D99FF; /* hover:text-blue-600 */
+}
+
+.header-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+.login-btn,
+.signup-btn {
+    padding: 0.5rem 1.5rem; /* Equal padding */
+    min-width: 90px; /* Set same minimum width */
+    text-align: center;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn {
+    background-color: #f3f4f6;
+    color: #0D99FF;
+}
+
+.signup-btn {
+    background-color: #0D99FF;
+    color: #ffffff;
+}
+
+.signup-btn:hover {
+    background-color: #2563eb;
+}

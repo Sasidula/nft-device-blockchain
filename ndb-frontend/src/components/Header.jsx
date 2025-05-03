@@ -1,43 +1,52 @@
-import React from "react"
-import { Container, Button, Group, Text } from "@mantine/core"
-import { Link, useNavigate } from "react-router-dom"
+import React from "react";
+import { Container, Button, Group, Text } from "@mantine/core";
+import { Link, useNavigate } from "react-router-dom";
+import "./Header.css";
+import homeIcon from '../assects/home-icon.png';
+import marketPlaceIcon from '../assects/market-place-icon.png'
+import myDevicesIcon from '../assects/my-devices-icon.png';
+
 export function Header() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
-        <header className="py-4 border-b border-gray-100 bg-white w-full">
-            <Container size="lg">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-8">
-                        <Text className="text-xl font-bold text-gray-900">TraceTech</Text>
+        <header className="header">
+            <Container fluid>
+                <div className="header-content">
+                    <div className="header-left">
+                        <Text className="logo">TraceTech</Text>
                         <Group gap="lg">
-                            <Link to="/" className="text-gray-600 hover:text-blue-600">
+                            <Link to="/" className="nav-link">
+                                <img src={homeIcon}  className="header-icon" />
                                 Home
                             </Link>
-                            <Link to="#" className="text-gray-600 hover:text-blue-600">
-                                My Devices
-                            </Link>
-                            <Link to="#" className="text-gray-600 hover:text-blue-600">
+                            <Link to="#" className="nav-link">
+                                <img src={marketPlaceIcon}  className="header-icon" />
                                 Marketplace
+                            </Link>
+                            <Link to="#" className="nav-link">
+                                <img src={myDevicesIcon}  className="header-icon" />
+                                My Devices
                             </Link>
                         </Group>
                     </div>
-                    <Group>
-                        <Button
-                            variant="subtle"
-                            color="gray"
-                            onClick={() => navigate("/login")}
-                        >
-                            Login
-                        </Button>
-                        <Button
-                            className="bg-blue-600 hover:bg-blue-700"
-                            onClick={() => navigate("/register")}
-                        >
-                            Sign Up
-                        </Button>
-                    </Group>
+                    <div className="header-right">
+                        <Group>
+                            <Button
+                                className="login-btn"
+                                onClick={() => navigate("/login")}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                className="signup-btn"
+                                onClick={() => navigate("/register")}
+                            >
+                                Sign Up
+                            </Button>
+                        </Group>
+                    </div>
                 </div>
             </Container>
         </header>
-    )
+    );
 }
