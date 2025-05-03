@@ -8,12 +8,17 @@
 
 /* Header Top Bar */
 .header-top {
-    display: flex;
-    justify-content: space-between;  /* Space between back icon and nav link */
-    align-items: center;
-    padding: 0.5rem 3rem;             /* Adjust spacing as needed */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: #ffffff;
-    border-bottom: 1px solid #e5e7eb; /* Optional: light border for separation */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 3rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
 }
 
 /* Back Icon Style */
@@ -138,7 +143,7 @@
     100% { opacity: 1; }
 }
 
-.footer-bottom-lg {
+.footer-bottom-login {
     text-align: center;
     padding: 0.5rem;
     border-top: 1px solid #e5e7eb;

@@ -5,6 +5,7 @@ import "./Header.css";
 import homeIcon from '../assects/home-icon.png';
 import marketPlaceIcon from '../assects/market-place-icon.png'
 import myDevicesIcon from '../assects/my-devices-icon.png';
+import traceTech from "../assects/traceTech.png";
 
 export function Header() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export function Header() {
             <Container fluid>
                 <div className="header-content">
                     <div className="header-left">
+                        <img src={traceTech} className="trace-tech"/>
                         <Text className="logo">TraceTech</Text>
                         <Group gap="lg">
                             <Link to="/" className="nav-link">

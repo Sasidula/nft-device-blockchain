@@ -38,7 +38,7 @@ export function LoginPage() {
                     <LoginCard /> {/* Render LoginCard here */}
                 </div>
             </div>
-            <div className="footer-bottom-lg">
+            <div className="footer-bottom-login">
                 <Text size="sm" className="footer-copy">
                     © {new Date().getFullYear()} Device Verification Platform. All rights reserved.
                 </Text>
