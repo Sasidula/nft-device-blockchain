@@ -1,24 +1,21 @@
-/* Wrapper for the whole page */
-.login-page-container {
+.register-page-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-color: #f9fafb;
 }
 
-.login-page-content {
+.register-page-content {
     display: flex;
-    padding-top: 27px;
     justify-content: space-between;
-    flex: 1; /* Take all available vertical space */
+    flex: 1; /* Takes up all available vertical space */
     overflow: hidden;
 }
 
-.login-content {
-    flex: 1; /* Pushes footer to bottom */
+.register-content {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 3rem;
 }
-
