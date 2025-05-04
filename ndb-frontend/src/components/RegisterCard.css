@@ -1,5 +1,6 @@
 .register-card {
     max-width: 400px;
+    min-height: 500px;
     width: 100%;
     margin: 2rem auto;
     background-color: #ffffff;
@@ -62,6 +63,3 @@
 .register-btn-card:hover {
     background-color: #2563eb;
 }
-
-
-
