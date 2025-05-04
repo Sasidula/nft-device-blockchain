@@ -6,6 +6,8 @@ import { Header } from "./components/Header.jsx"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
+import {DevicesPage} from "./pages/DevicesPage.jsx";
+import {MarketPage} from "./pages/MarketPage.jsx";
 function HomePage() {
     return (
         <>
@@ -26,6 +28,8 @@ export function App() {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="/devices" element={<DevicesPage />} />
+                    <Route path="/market" element={<MarketPage />} />
                 </Routes>
             </div>
         </BrowserRouter>
