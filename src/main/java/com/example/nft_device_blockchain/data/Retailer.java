@@ -1,6 +1,7 @@
 package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "retailer")
@@ -9,11 +10,13 @@ public class Retailer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "retailer_id")
-    private Long retailer_id;
+    private int retailer_id;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Users user;
+
 
     @Column(name = "address")
     private String address;
@@ -21,15 +24,17 @@ public class Retailer {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "services_Provided")
-    private String services_provided;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "services_provided", nullable = false)
+    private Service.service service;
 
     // Getters and Setters
-    public Long getRetailerId() {
+
+    public int getRetailer_id() {
         return retailer_id;
     }
 
-    public void setRetailerId(Long retailer_id) {
+    public void setRetailer_id(int retailer_id) {
         this.retailer_id = retailer_id;
     }
 
@@ -57,11 +62,11 @@ public class Retailer {
         this.phone = phone;
     }
 
-    public String getServicesProvided() {
-        return services_provided;
+    public Service.service getService() {
+        return service;
     }
 
-    public void setServicesProvided(String services_provided) {
-        this.services_provided = services_provided;
+    public void setService(Service.service service) {
+        this.service = service;
     }
 }

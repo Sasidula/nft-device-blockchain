@@ -1,6 +1,7 @@
 package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private int user;
 
     @Column(name = "wallet_address")
     private String walletAddress;
@@ -22,29 +23,45 @@ public class Users {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING) // Ensures it's stored as text in the DB
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Role role;
+    private RoleDTO.Role role;
 
     @Column(name = "password")
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
-    public enum Role {
-        RETAILER,
-        CONSUMER,  // Make sure this matches your DB ENUM values
-        ADMIN
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Retailer retailer;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Consumer consumer;
+
+    public int getUser() {
+        return user;
     }
 
-    public int getUserId() {
-        return userId;
+    public Consumer getConsumer() {
+        return consumer;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setConsumer(Consumer consumer) {
+        this.consumer = consumer;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    public Retailer getRetailer() {
+        return retailer;
+    }
+
+    public void setRetailer(Retailer retailer) {
+        this.retailer = retailer;
     }
 
     public Date getCreatedAt() {
@@ -63,11 +80,11 @@ public class Users {
         this.password = password;
     }
 
-    public Role getRole() {
+    public RoleDTO.Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(RoleDTO.Role role) {
         this.role = role;
     }
 

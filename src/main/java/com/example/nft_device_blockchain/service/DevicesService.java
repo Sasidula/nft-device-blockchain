@@ -25,7 +25,7 @@ public class DevicesService {
     }
 
     public List<Devices> getDevicesByCurrentOwnerId(int userId) {
-        return devicesRepository.findByCurrentOwner_UserId(userId);
+        return devicesRepository.findByCurrentOwner_User(userId);
     }
 
     public Devices createDevice(Devices device) {

@@ -1,6 +1,7 @@
 package com.example.nft_device_blockchain.data;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,7 +68,8 @@ public class Devices {
     @Column(name = "blacklisted")
     private boolean blacklisted;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
     public int getDeviceId() {

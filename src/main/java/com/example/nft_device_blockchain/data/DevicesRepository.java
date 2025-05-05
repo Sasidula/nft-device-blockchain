@@ -22,5 +22,5 @@ public interface DevicesRepository extends JpaRepository<Devices, Integer> {
     @Query("SELECT d FROM Devices d WHERE d.registeredBy = ?1")
     List<Devices> findByRegisteredBy(int registeredBy);
 
-    List<Devices> findByCurrentOwner_UserId(int currentOwner);
+    List<Devices> findByCurrentOwner_User(int currentOwner);
 }

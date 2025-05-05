@@ -1,11 +1,8 @@
 package com.example.nft_device_blockchain.controller;
 
-import com.example.nft_device_blockchain.data.Retailer;
-import com.example.nft_device_blockchain.data.Consumer;
-import com.example.nft_device_blockchain.data.Users;
-import com.example.nft_device_blockchain.data.UsersRepository;
+import com.example.nft_device_blockchain.data.*;
 import com.example.nft_device_blockchain.service.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +12,12 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UsersController {
 
+    private final UsersService usersService;
+
     private final UsersRepository usersRepository;
 
-    public UsersController(UsersRepository usersRepository) {
+    public UsersController(UsersService usersService, UsersRepository usersRepository) {
+        this.usersService = usersService;
         this.usersRepository = usersRepository;
     }
 
@@ -26,16 +26,29 @@ public class UsersController {
         return usersRepository.findAll();
     }
 
-    @PostMapping
+    /*@PostMapping
     public Users createUser(@RequestBody Users user) {
         return usersRepository.save(user);
     }
 
     @PutMapping("/{userId}")
     public Users updateUser(@PathVariable int userId, @RequestBody Users user) {
-        user.setUserId(userId);
+        user.setUser(userId);
         return usersRepository.save(user);
     }
+    */
+
+    @PostMapping
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDto) {
+        return usersService.registerUser(userDto);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateUser(@PathVariable int userId, @RequestBody UserDTO userDto) {
+        return usersService.updateUser(userId, userDto);
+    }
+
+
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable int userId) {

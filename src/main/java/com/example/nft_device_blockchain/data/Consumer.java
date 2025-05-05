@@ -1,5 +1,6 @@
 package com.example.nft_device_blockchain.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,8 +10,9 @@ public class Consumer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "consumer_id")
-    private Long consumer_id;
+    private int consumer_id;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Users user;
@@ -25,28 +27,21 @@ public class Consumer {
     private String wallet_address;
 
     // Getters and Setters
-    public Long getConsumerId() {
+
+    public int getConsumer_id() {
         return consumer_id;
     }
 
-    public void setConsumerId(Long consumer_id) {
+    public void setConsumer_id(int consumer_id) {
         this.consumer_id = consumer_id;
     }
 
-    public Users getUser() {
-        return user;
+    public String getWalletAddress() {
+        return wallet_address;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setWalletAddress(String wallet_address) {
+        this.wallet_address = wallet_address;
     }
 
     public String getPhone() {
@@ -57,11 +52,19 @@ public class Consumer {
         this.phone = phone;
     }
 
-    public String getWalletAddress() {
-        return wallet_address;
+    public String getAddress() {
+        return address;
     }
 
-    public void setWalletAddress(String wallet_address) {
-        this.wallet_address = wallet_address;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 }

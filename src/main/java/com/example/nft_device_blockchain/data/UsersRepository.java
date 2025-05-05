@@ -13,8 +13,8 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     @Query("SELECT u FROM Users u WHERE u.walletAddress = ?1")
     Users findByWalletAddress(String walletAddress);
 
-    @Query("SELECT u FROM Users u WHERE u.userId = ?1")
-    List<Users> findByUserId(int userId);
+    @Query("SELECT u FROM Users u WHERE u.user = ?1")
+    List<Users> findByUser(int userId);
 
     @Query("SELECT u FROM Users u WHERE u.email = ?1")
     List<Users> findByEmail(String email);

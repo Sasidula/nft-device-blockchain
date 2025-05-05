@@ -25,7 +25,7 @@ public class Warranty_logsController {
     @PostMapping
     public Warranty_logs createWarranty_logs(@RequestBody Warranty_logs warranty_logs) {
         if (warranty_logs.getAdded_by() != null) {
-            int userId = warranty_logs.getAdded_by().getUserId();
+            int userId = warranty_logs.getAdded_by().getUser();
             Users user = usersRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
             warranty_logs.setAdded_by(user);

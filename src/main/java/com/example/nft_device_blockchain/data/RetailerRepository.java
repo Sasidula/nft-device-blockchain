@@ -2,6 +2,9 @@ package com.example.nft_device_blockchain.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RetailerRepository extends JpaRepository<Retailer, Long> {
-    Retailer findByUser(Users user);
+import java.util.Optional;
+
+public interface RetailerRepository extends JpaRepository<Retailer, Integer> {
+
+    Optional<Retailer> findByUser(Users user);
 }

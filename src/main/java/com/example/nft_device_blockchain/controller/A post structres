@@ -7,14 +7,39 @@ http://localhost:8080/api/model/predict-next-month-price
 }
 
 
-post users
+post admin users
 http://localhost:8080/api/users
 {
-  "walletAddress": "0x1234567890abcdef1234",
-  "email": "newuser@example.com",
-  "name": "New User",
+  "name": "Alice Admin",
+  "email": "alice.admin@example.com",
+  "password": "adminpass123",
+  "walletAddress": "0xABCDEF1234567890",
+  "role": "ADMIN"
+}
+
+post consumer user
+http://localhost:8080/api/users
+{
+  "name": "Charlie Consumer",
+  "email": "charlie.consumer@example.com",
+  "password": "consumerpass123",
+  "walletAddress": "0xFEDCBA0987654321",
   "role": "CONSUMER",
-  "password": "testpass123"
+  "address": "456 Suburb Lane",
+  "phone": "0723456789"
+}
+
+post retailer user
+http://localhost:8080/api/users
+{
+  "name": "Bob Retailer",
+  "email": "bob.retailer@example.com",
+  "password": "retailerpass123",
+  "walletAddress": "0x2234545678ABCEF",
+  "role": "RETAILER",
+  "address": "123 Market Street",
+  "phone": "0712345678",
+  "service": "Sell"
 }
 
 
