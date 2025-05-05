@@ -1,0 +1,1 @@
+  4 7 0 jdk/internal/util/ReferencedKeyMap removeStaleReferences ()V 5 4 0 java/lang/ref/NativeReferenceQueue poll ()Ljava/lang/ref/Reference; 6 1 0 java/lang/ref/ReferenceQueue headIsNull ()Z 5 20 0 java/util/concurrent/ConcurrentHashMap remove (Ljava/lang/Object;)Ljava/lang/Object;
