@@ -48,7 +48,7 @@ export function LoginCard() {
                     </Stack>
                 </form>
 
-                <Text className="forgot-password">
+                <Text size="xs" className="forgot-password">
                     <Anchor href="/forgot-password" className="forgot-password-link">
                         Forgot password?
                     </Anchor>

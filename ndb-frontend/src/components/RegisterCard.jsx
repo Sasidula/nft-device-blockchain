@@ -53,7 +53,7 @@ export function RegisterCard() {
 
     // Update the total number of steps based on the selected user type
     const totalSteps = () => {
-        if (userType === "ADMIN") return 2;
+        //if (userType === "ADMIN") return 2;
         if (userType === "CONSUMER") return 3;
         if (userType === "RETAILER") return 4;
         return 1;
@@ -98,7 +98,7 @@ export function RegisterCard() {
                                 <Select
                                     label="Select Your User Type"
                                     placeholder="User Type"
-                                    data={["ADMIN", "CONSUMER", "RETAILER"]}
+                                    data={["CONSUMER", "RETAILER"]}
                                     value={userType}
                                     onChange={(value) => {
                                         setUserType(value);
@@ -131,29 +131,29 @@ export function RegisterCard() {
                                 </>
                             )}
 
-                            {step === 2 && (userType === "ADMIN") && (
-                                <>
-                                    <PasswordInput
-                                        label="Password"
-                                        placeholder="Enter password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    <PasswordInput
-                                        label="Confirm Password"
-                                        placeholder="Re-Enter password"
-                                        name="confirmPassword"
-                                        value={formData.confirmPassword}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                    <Text size="xs" color="dimmed" >
-                                        Password must be at least 8 characters with a number and special character.
-                                    </Text>
-                                </>
-                            )}
+                            {/*{step === 2 && (userType === "ADMIN") && (*/}
+                            {/*    <>*/}
+                            {/*        <PasswordInput*/}
+                            {/*            label="Password"*/}
+                            {/*            placeholder="Enter password"*/}
+                            {/*            name="password"*/}
+                            {/*            value={formData.password}*/}
+                            {/*            onChange={handleChange}*/}
+                            {/*            required*/}
+                            {/*        />*/}
+                            {/*        <PasswordInput*/}
+                            {/*            label="Confirm Password"*/}
+                            {/*            placeholder="Re-Enter password"*/}
+                            {/*            name="confirmPassword"*/}
+                            {/*            value={formData.confirmPassword}*/}
+                            {/*            onChange={handleChange}*/}
+                            {/*            required*/}
+                            {/*        />*/}
+                            {/*        <Text size="xs" color="dimmed" >*/}
+                            {/*            Password must be at least 8 characters with a number and special character.*/}
+                            {/*        </Text>*/}
+                            {/*    </>*/}
+                            {/*)}*/}
 
                             {step === 2 && (userType === "CONSUMER" || userType === "RETAILER") && (
                                 <>

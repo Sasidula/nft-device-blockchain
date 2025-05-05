@@ -34,7 +34,6 @@ public class Users {
     private Date createdAt;
 
     public enum Role {
-        MANUFACTURER,
         RETAILER,
         CONSUMER,  // Make sure this matches your DB ENUM values
         ADMIN

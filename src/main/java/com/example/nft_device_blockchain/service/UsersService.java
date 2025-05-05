@@ -1,5 +1,7 @@
 package com.example.nft_device_blockchain.service;
 
+import com.example.nft_device_blockchain.data.Consumer;
+import com.example.nft_device_blockchain.data.Retailer;
 import com.example.nft_device_blockchain.data.Users;
 import com.example.nft_device_blockchain.data.UsersRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,14 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
+    public Consumer createConsumer(Consumer consumer) {
+        return consumerRepository.save(consumer);
+    }
+
+    public Retailer createRetailer(Retailer retailer) {
+        return retailerRepository.save(retailer);
+    }
+
     public Users updateUser(Users user) {
         return usersRepository.save(user);
     }
@@ -46,6 +56,4 @@ public class UsersService {
     public List<Users> getUserByName(String name) {
         return usersRepository.findByName(name);
     }
-
-
 }
