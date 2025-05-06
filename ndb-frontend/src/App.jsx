@@ -8,6 +8,8 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import {DevicesPage} from "./pages/DevicesPage.jsx";
 import {MarketPage} from "./pages/MarketPage.jsx";
+import {DeviceDetail} from "./pages/DeviceDetail.jsx";
+import {ShopDevice} from "./pages/ShopDevice.jsx";
 function HomePage() {
     return (
         <>
@@ -30,6 +32,8 @@ export function App() {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/devices" element={<DevicesPage />} />
                     <Route path="/market" element={<MarketPage />} />
+                    <Route path="/detail" element={<DeviceDetail />} />
+                    <Route path="/shop" element={<ShopDevice />} />
                 </Routes>
             </div>
         </BrowserRouter>
