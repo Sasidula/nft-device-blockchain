@@ -10,6 +10,7 @@ import {DevicesPage} from "./pages/DevicesPage.jsx";
 import {MarketPage} from "./pages/MarketPage.jsx";
 import {DeviceDetail} from "./pages/DeviceDetail.jsx";
 import {ShopDevice} from "./pages/ShopDevice.jsx";
+import {DeviceRegisterPage} from "./pages/DeviceRegisterPage.jsx";
 
 function HomePage() {
     return (
@@ -35,6 +36,7 @@ export function App() {
                     <Route path="/market" element={<MarketPage />} />
                     <Route path="/detail" element={<DeviceDetail />} />
                     <Route path="/shop" element={<ShopDevice />} />
+                    <Route path="/deviceRegister" element={<DeviceRegisterPage />} />
                 </Routes>
             </div>
         </BrowserRouter>
