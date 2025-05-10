@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     TextInput,
     PasswordInput,
@@ -8,10 +8,43 @@ import {
     Title,
     Text,
     Card,
+    Notification,
 } from "@mantine/core";
+import { IconX } from "@tabler/icons-react";
 import "./LoginCard.css";
 
 export function LoginCard() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        try {
+            const response = await fetch("http://localhost:8080/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem("user", JSON.stringify(data));
+                window.location.href = "/devices";
+            } else {
+                // Try reading plain text message from error response
+                const errorMessage = await response.text();
+                setError(errorMessage || "Login failed.");
+            }
+        } catch (err) {
+            setError("An error occurred. Please try again.");
+        }
+    };
+
     return (
         <Card className="login-card" shadow="sm" padding="xl" radius="md">
             <div className="login-card-content">
@@ -22,7 +55,19 @@ export function LoginCard() {
                     Log in to access your account
                 </Text>
 
-                <form className="login-form">
+                {error && (
+                    <Notification
+                        icon={<IconX size="1.1rem" />}
+                        color="red"
+                        title="Login Failed"
+                        withCloseButton={false}
+                        mt="md"
+                    >
+                        {error}
+                    </Notification>
+                )}
+
+                <form className="login-form" onSubmit={handleSubmit}>
                     <Stack spacing="xl">
                         <div className="login-from-container">
                             <TextInput
@@ -31,12 +76,16 @@ export function LoginCard() {
                                 type="email"
                                 autoComplete="email"
                                 required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <PasswordInput
                                 label="Password"
                                 placeholder="Enter your password"
                                 required
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
 

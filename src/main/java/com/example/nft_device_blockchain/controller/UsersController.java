@@ -2,10 +2,12 @@ package com.example.nft_device_blockchain.controller;
 
 import com.example.nft_device_blockchain.data.*;
 import com.example.nft_device_blockchain.service.UsersService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -48,7 +50,15 @@ public class UsersController {
         return usersService.updateUser(userId, userDto);
     }
 
-
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Optional<Users> users = usersService.login(request.getEmail(), request.getPassword());
+        if(users.isPresent()) {
+            return ResponseEntity.ok(users);
+        } else {
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable int userId) {

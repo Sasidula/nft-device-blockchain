@@ -138,6 +138,10 @@ public class UsersService {
         return usersRepository.save(user);
     }*/
 
+    public Optional<Users> login(String email, String password) {
+        return usersRepository.findByEmailAndPassword(email, password);
+    }
+
     public void deleteUser(int userId) {
         usersRepository.deleteById(userId);
     }

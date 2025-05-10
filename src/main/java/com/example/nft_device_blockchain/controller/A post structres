@@ -6,6 +6,13 @@ http://localhost:8080/api/model/predict-next-month-price
   "purchase_date": "2024-01-01"
 }
 
+post user login
+http://localhost:8080/api/user/login
+{
+  "email": "dave@admin.com",
+  "password": "adminpass001"
+}
+
 
 post admin users
 http://localhost:8080/api/users
