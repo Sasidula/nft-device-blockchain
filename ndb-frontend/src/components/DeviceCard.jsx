@@ -1,51 +1,42 @@
-import React from "react"
-import { Smartphone, Laptop, Tablet, Monitor } from "lucide-react"
+import React from "react";
+import { Smartphone, Laptop, Tablet, Monitor } from "lucide-react";
+import "../components/DeviceCard.css";
+
 export const DeviceCard = ({
                                type,
                                name,
                                dateAdded,
                                price,
-                               isMarketCard = false
+                               isMarketCard = false,
                            }) => {
     const getIcon = () => {
         switch (type) {
             case "phone":
-                return <Smartphone size={24} />
+                return <Smartphone size={24} />;
             case "laptop":
-                return <Laptop size={24} />
+                return <Laptop size={24} />;
             case "tablet":
-                return <Tablet size={24} />
+                return <Tablet size={24} />;
             case "other":
-                return <Monitor size={24} />
+                return <Monitor size={24} />;
             default:
-                return <Smartphone size={24} />
+                return <Smartphone size={24} />;
         }
-    }
+    };
+
     return (
         <div
-            className={`bg-blue-50 rounded-lg shadow p-4 ${
-                isMarketCard ? "flex flex-col h-full" : "flex items-start"
-            }`}
+            className={`device-card ${isMarketCard ? "market-card" : "normal-card"}`}
         >
-            <div
-                className={`${
-                    isMarketCard ? "flex items-center justify-center mb-3" : "mr-4"
-                }`}
-            >
-                <div className="bg-white p-3 rounded-full">{getIcon()}</div>
+            <div className={`device-icon-wrapper ${isMarketCard ? "market-icon" : ""}`}>
+                <div className="device-icon">{getIcon()}</div>
             </div>
-            <div className={`${isMarketCard ? "" : "flex-1"}`}>
-                <h3 className="font-medium text-gray-800">{name}</h3>
-                {dateAdded && (
-                    <p className="text-sm text-gray-500">Date Added: {dateAdded}</p>
-                )}
-                {price && (
-                    <p className="text-sm font-bold text-gray-800 mt-1">{price}</p>
-                )}
+            <div className={`device-details ${isMarketCard ? "" : "flex-grow"}`}>
+                <h3 className="device-name">{name}</h3>
+                {dateAdded && <p className="device-date">Date Added: {dateAdded}</p>}
+                {price && <p className="device-price">{price}</p>}
             </div>
-            <button className="mt-3 px-4 py-2 rounded-md bg-blue-700 text-white text-sm hover:bg-blue-800">
-                View More
-            </button>
+            <button className="device-button">View Details</button>
         </div>
-    )
-}
+    );
+};

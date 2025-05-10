@@ -75,4 +75,3 @@ public class UsersController {
         return usersRepository.findByName(name);
     }
 }
-

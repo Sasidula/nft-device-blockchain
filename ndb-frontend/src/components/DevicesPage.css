@@ -1,0 +1,115 @@
+.devices-page-container {
+    padding-top: 6rem;
+    background-color: #f9fafb;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.device-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.device-title {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: bold;
+    color: #1f2937; /* text-gray-800 */
+}
+
+@media (min-width: 768px) {
+    .device-title {
+        font-size: 3rem; /* md:text-5xl */
+    }
+}
+
+.device-subtext {
+    color: #4b5563; /* text-gray-600 */
+    max-width: 42rem; /* max-w-2xl */
+    padding-bottom: 3rem;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.search-bar-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.device-section {
+    padding: 4rem;
+}
+
+.register-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.device-list {
+    display: block;
+    padding: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.action-section{
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.action-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.action-buttons {
+    padding: 2rem 4rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.register-btn,
+.report-btn {
+    padding: 0.5rem 1.5rem; /* Equal padding */
+    min-width: 200px; /* Set same minimum width */
+    text-align: center;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn {
+    background-color: #0D99FF;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #2563eb;
+}
+
+.report-btn {
+    background-color: #f3f4f6;
+    transition: background-color 0.3s ease;
+    color: #0D99FF;
+}
+
+.report-btn:hover {
+    background-color: #0D99FF;
+}
