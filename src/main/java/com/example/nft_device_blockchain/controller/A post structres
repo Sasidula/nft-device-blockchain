@@ -75,6 +75,8 @@ http://localhost:8080/api/history
   "privateKey": "updated-private-key"
 }
 
+get device by own user
+http://localhost:8080/api/devices/owner/{user_id}
 
 post devices
 http://localhost:8080/api/devices
