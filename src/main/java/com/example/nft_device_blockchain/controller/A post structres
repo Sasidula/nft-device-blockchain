@@ -43,6 +43,15 @@ http://localhost:8080/api/users
 }
 
 
+Post market
+{
+  "availability": true,
+  "price": 280.99,
+  "deviceId": 1,
+  "ownershipId": 2
+}
+
+
 post tranfer requests
 http://localhost:8080/api/requests
 

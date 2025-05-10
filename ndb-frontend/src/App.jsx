@@ -10,6 +10,7 @@ import {DevicesPage} from "./pages/DevicesPage.jsx";
 import {MarketPage} from "./pages/MarketPage.jsx";
 import {DeviceDetail} from "./pages/DeviceDetail.jsx";
 import {ShopDevice} from "./pages/ShopDevice.jsx";
+
 function HomePage() {
     return (
         <>
