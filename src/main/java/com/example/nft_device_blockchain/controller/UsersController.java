@@ -84,4 +84,10 @@ public class UsersController {
     public List<Users> getUserByName(@PathVariable String name) {
         return usersRepository.findByName(name);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserDTO userDto) {
+        return usersService.loginUser(userDto.getEmail(), userDto.getPassword());
+    }
+
 }

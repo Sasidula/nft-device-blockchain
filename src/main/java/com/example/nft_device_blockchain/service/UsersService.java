@@ -165,4 +165,19 @@ public class UsersService {
     public List<Consumer> getAllConsumers() {
         return consumerRepository.findAll();
     }
+
+    public ResponseEntity<?> loginUser(String email, String password) {
+        List<Users> users = usersRepository.findByEmail(email);
+        if (users.isEmpty()) {
+            return new ResponseEntity<>("Invalid email", HttpStatus.UNAUTHORIZED);
+        }
+
+        Users user = users.get(0);
+        if (!user.getPassword().equals(password)) {
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }
