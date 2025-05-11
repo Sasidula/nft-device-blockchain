@@ -85,9 +85,9 @@ public class UsersController {
         return usersRepository.findByName(name);
     }
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDto) {
         return usersService.loginUser(userDto.getEmail(), userDto.getPassword());
-    }
+    }*/
 
 }

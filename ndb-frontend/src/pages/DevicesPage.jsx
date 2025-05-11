@@ -1,77 +1,71 @@
-import React from "react";
-import { Header }  from "../components/Header.jsx";
-import { Footer }  from "../components/Footer.jsx";
+import React, { useEffect, useState } from "react";
+import { Header } from "../components/Header.jsx";
+import { Footer } from "../components/Footer.jsx";
 import { SearchBar } from "../components/SearchBar.jsx";
 import { DeviceCard } from "../components/DeviceCard.jsx";
 import "../components/DevicesPage.css";
-import {Button, Group, Text, Title} from "@mantine/core";
-import {ArrowRight, ShieldCheck, ShoppingBag} from "lucide-react";
+import { Button, Group, Text, Title } from "@mantine/core";
 
 export const DevicesPage = () => {
-    const devices = [
-        { id: 1, type: "phone", name: "iPhone 13 Pro", dateAdded: "2023-05-12" },
-        { id: 2, type: "laptop", name: "MacBook Air M2", dateAdded: "2023-04-03" },
-        { id: 3, type: "tablet", name: "iPad Pro 12.9", dateAdded: "2023-03-22" },
-        { id: 4, type: "phone", name: "Samsung Galaxy S22", dateAdded: "2023-02-15" },
-        { id: 5, type: "laptop", name: "Dell XPS 15", dateAdded: "2023-01-30" },
-        { id: 6, type: "other", name: "Apple Watch Series 8", dateAdded: "2022-12-25" },
-        { id: 7, type: "tablet", name: "Samsung Galaxy Tab S8", dateAdded: "2022-11-11" },
-    ];
+    const [devices, setDevices] = useState([]);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user?.user) {
+            console.error("User not found in localStorage.");
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/devices/owner/${user.user}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Failed to fetch devices");
+                return res.json();
+            })
+            .then((data) => {
+                setDevices(data);
+            })
+            .catch((err) => console.error("Error fetching devices:", err));
+    }, []);
 
     return (
         <div className="devices">
-            <Header/>
+            <Header />
             <div className="devices-page-container">
-                <div className= "device-text">
-                    <Title order={1} className="device-title">
-                        My Devices
-                    </Title>
+                <div className="device-text">
+                    <Title order={1} className="device-title">My Devices</Title>
                     <Text size="xl" className="device-subtext">
                         View and manage your registered devices. Track ownership, warranty, and resale options.
                     </Text>
                 </div>
+
                 <div className="search-bar-wrapper">
                     <SearchBar placeholder="Search Devices by Model, NFT or Serial Number" />
                 </div>
 
                 <div className="device-section">
-                    <Text className="register-title">
-                        Registered Devices
-                    </Text>
+                    <Text className="register-title">Registered Devices</Text>
                     <div className="device-list">
                         {devices.map((device) => (
                             <DeviceCard
-                                key={device.id}
-                                type={device.type}
+                                key={device.deviceId}
+                                id={device.deviceId}
+                                type={device.deviceType}
                                 name={device.name}
-                                dateAdded={device.dateAdded}
+                                dateAdded={device.purchaseDate}
                             />
                         ))}
                     </div>
                 </div>
+
                 <div className="action-section">
-                    <text className="action-title">
-                        Device Action
-                    </text>
+                    <Text className="action-title">Device Action</Text>
                     <Group className="action-buttons">
-                        <Button
-                            size="md"
-                            className="register-btn"
-                        >
-                            Register New Device
-                        </Button>
-                        <Button
-                            size="md"
-                            className="report-btn"
-                        >
-                            Report Lost/Stolen
-                        </Button>
+                        <Button size="md" className="register-btn">Register New Device</Button>
+                        <Button size="md" className="report-btn">Report Lost/Stolen</Button>
                     </Group>
                 </div>
             </div>
-            <div>
-                <Footer/>
-            </div>
+            <Footer />
         </div>
     );
 };

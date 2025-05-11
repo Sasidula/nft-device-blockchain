@@ -32,8 +32,8 @@ export function LoginCard() {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem("user", JSON.stringify(data));
+                const user = await response.json(); // Assuming API returns a user object
+                localStorage.setItem("user", JSON.stringify(user)); // Save to localStorage
                 window.location.href = "/devices";
             } else {
                 // Try reading plain text message from error response

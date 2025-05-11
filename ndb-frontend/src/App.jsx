@@ -29,7 +29,7 @@ export function App() {
         <BrowserRouter>
             <div className="flex flex-col min-h-screen w-full bg-white">
                 <Routes>
-                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/devices" element={<DevicesPage />} />
