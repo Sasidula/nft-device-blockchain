@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Search, X } from "lucide-react";
 import "../components/SearchBar.css";
 
-export const SearchBar = ({ placeholder }) => {
-    const [searchText, setSearchText] = useState("");
-
+// SearchBar.jsx
+export const SearchBar = ({ placeholder, searchText, setSearchText }) => {
     const handleClear = () => {
         setSearchText("");
     };

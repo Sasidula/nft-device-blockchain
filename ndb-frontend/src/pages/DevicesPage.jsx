@@ -8,6 +8,7 @@ import { Button, Group, Text, Title } from "@mantine/core";
 
 export const DevicesPage = () => {
     const [devices, setDevices] = useState([]);
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -39,21 +40,35 @@ export const DevicesPage = () => {
                 </div>
 
                 <div className="search-bar-wrapper">
-                    <SearchBar placeholder="Search Devices by Model, NFT or Serial Number" />
+                    <SearchBar
+                        placeholder="Search Devices by Model, NFT or Serial Number"
+                        searchText={searchText}
+                        setSearchText={setSearchText}
+                    />
                 </div>
 
                 <div className="device-section">
                     <Text className="register-title">Registered Devices</Text>
                     <div className="device-list">
-                        {devices.map((device) => (
-                            <DeviceCard
-                                key={device.deviceId}
-                                id={device.deviceId}
-                                type={device.deviceType}
-                                name={device.name}
-                                dateAdded={device.purchaseDate}
-                            />
-                        ))}
+                        {devices
+                            .filter((device) => {
+                                const text = searchText.toLowerCase();
+                                return (
+                                    device.name?.toLowerCase().includes(text) ||
+                                    String(device.deviceId).toLowerCase().includes(text) ||
+                                    device.deviceType?.toLowerCase().includes(text)
+                                );
+                            })
+                            .map((device) => (
+                                <DeviceCard
+                                    key={device.deviceId}
+                                    id={device.deviceId}
+                                    type={device.deviceType}
+                                    name={device.name}
+                                    dateAdded={device.purchaseDate}
+                                />)
+                            )
+                        }
                     </div>
                 </div>
 

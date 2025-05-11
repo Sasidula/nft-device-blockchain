@@ -12,7 +12,7 @@ export const DeviceCard = ({
                            }) => {
     const getIcon = () => {
         switch (type?.toLowerCase()) {
-            case "phone":
+            case "smartphone":
                 return <Smartphone size={24} />;
             case "laptop":
                 return <Laptop size={24} />;

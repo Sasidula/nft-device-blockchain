@@ -46,10 +46,59 @@ export function RegisterCard() {
 
     const prevStep = () => setStep((prev) => prev - 1);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Registration submitted:", formData);
+
+        // Validate password match
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        // Build the payload based on user type
+        const basePayload = {
+            name: formData.fullName,
+            email: formData.emailAddress,
+            password: formData.password,
+            walletAddress: null,
+            role: formData.userType,
+            address: formData.address,
+            phone: formData.phoneNumber
+        };
+
+        let payload = basePayload;
+
+        if (formData.userType === "RETAILER") {
+            payload = {
+                ...basePayload,
+                service: formData.serviceProvided.join(", ")
+            };
+        }
+
+        try {
+            const response = await fetch("http://localhost:8080/api/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Registration failed: ${errorText}`);
+            }
+
+            const data = await response.json();
+            alert("Registration successful!");
+            console.log("Registered user:", data);
+            window.location.href = "/login";
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert(error.message);
+        }
     };
+
 
     // Update the total number of steps based on the selected user type
     const totalSteps = () => {
