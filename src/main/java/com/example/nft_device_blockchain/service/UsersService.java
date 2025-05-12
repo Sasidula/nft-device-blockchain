@@ -5,12 +5,13 @@ import com.example.nft_device_blockchain.data.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.WalletUtils;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import static java.lang.Enum.valueOf;
 
 @Service
 public class UsersService {
@@ -36,44 +37,58 @@ public class UsersService {
     }
 
     public ResponseEntity<?> registerUser(UserDTO userDTO) {
-        Users user = new Users();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setWalletAddress(userDTO.getWalletAddress());
-        user.setRole(userDTO.getRole());
-        user.setCreatedAt(new Date());
+        try {
+            // === 1. Generate Wallet ===
+            String walletDir = "wallets"; // Ensure this folder exists or is created
+            new File(walletDir).mkdirs(); // Create if not exists
 
-        Users savedUser = usersRepository.save(user);
+            String password = userDTO.getPassword(); // Or use a separate secure password
+            String walletFile = WalletUtils.generateNewWalletFile(password, new File(walletDir));
+            Credentials credentials = WalletUtils.loadCredentials(password, walletDir + "/" + walletFile);
+            String walletAddress = credentials.getAddress(); // e.g., 0x....
 
-        switch (userDTO.getRole()) {
-            case ADMIN:
-                // Only user record, no more action
-                break;
+            // === 2. Create User ===
+            Users user = new Users();
+            user.setName(userDTO.getName());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(password); // Consider hashing this
+            user.setWalletAddress(walletAddress);
+            user.setRole(userDTO.getRole());
+            user.setCreatedAt(new Date());
 
-            case RETAILER:
-                Retailer retailer = new Retailer();
-                retailer.setUser(user);
-                retailer.setAddress(userDTO.getAddress());
-                retailer.setPhone(userDTO.getPhone());
-                retailer.setService(userDTO.getService());
-                retailerRepository.save(retailer);
-                break;
+            Users savedUser = usersRepository.save(user);
 
-            case CONSUMER:
-                Consumer consumer = new Consumer();
-                consumer.setUser(user);
-                consumer.setAddress(userDTO.getAddress());
-                consumer.setPhone(userDTO.getPhone());
-                consumer.setWalletAddress(userDTO.getWalletAddress());
-                consumerRepository.save(consumer);
-                break;
+            // === 3. Handle Roles ===
+            switch (userDTO.getRole()) {
+                case ADMIN:
+                    // Admin only, no additional data
+                    break;
+
+                case RETAILER:
+                    Retailer retailer = new Retailer();
+                    retailer.setUser(user);
+                    retailer.setAddress(userDTO.getAddress());
+                    retailer.setPhone(userDTO.getPhone());
+                    retailer.setService(userDTO.getService());
+                    retailerRepository.save(retailer);
+                    break;
+
+                case CONSUMER:
+                    Consumer consumer = new Consumer();
+                    consumer.setUser(user);
+                    consumer.setAddress(userDTO.getAddress());
+                    consumer.setPhone(userDTO.getPhone());
+                    consumer.setWalletAddress(walletAddress);
+                    consumerRepository.save(consumer);
+                    break;
+            }
+
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error during registration", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        Users createdUser = usersRepository.findById(savedUser.getUser()).orElse(null);
-
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-
     }
 
     public ResponseEntity<?> updateUser(int id,UserDTO userDTO) {
