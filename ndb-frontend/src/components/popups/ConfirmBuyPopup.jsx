@@ -9,7 +9,7 @@ import {
     BoxIcon
 } from "lucide-react";
 import { IconListItem } from "../shared/IconList";
-import "./ConfirmBuyPopup.css"; // CSS file
+import "./ConfirmBuyPopup.css";
 
 export const ConfirmBuyPopup = ({ isOpen, onClose }) => {
     const [publicKey, setPublicKey] = useState("");

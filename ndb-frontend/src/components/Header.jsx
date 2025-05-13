@@ -7,15 +7,37 @@ import marketPlaceIcon from "../assects/market-place-icon.png";
 import myDevicesIcon from "../assects/my-devices-icon.png";
 import profileIcon from "../assects/profile-icon.png";
 import traceTech from "../assects/traceTech.png";
+import deviceRegisterIcon from "../assects/device-register-icon.png";
+import deviceUpdateIcon from "../assects/device-update-icon.png";
+import { AddRepairLogPopup } from "./popups/AddRepairLogPopup.jsx";
 
 export function Header() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [role, setRole] = useState(null);
+    const [isRepairLogPopupOpen, setIsRepairLogPopupOpen] = useState(false);
+    const openRepairLogPopup = () => setIsRepairLogPopupOpen(true);
+    const closeRepairLogPopup = () => setIsRepairLogPopupOpen(false);
 
-    // Check if user is logged in on component mount
+
+    // ✅ Fixed: Properly parse user from localStorage
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        setIsLoggedIn(!!user);
+        const userString = localStorage.getItem("user");
+
+        if (userString) {
+            try {
+                const user = JSON.parse(userString);
+                setIsLoggedIn(true);
+                setRole(user.role);
+            } catch (err) {
+                console.error("Error parsing user from localStorage:", err);
+                setIsLoggedIn(false);
+                setRole(null);
+            }
+        } else {
+            setIsLoggedIn(false);
+            setRole(null);
+        }
     }, []);
 
     return (
@@ -31,14 +53,55 @@ export function Header() {
                                 Home
                             </Link>
                             <Link to="/market" className="nav-link">
-                                <img src={marketPlaceIcon} className="header-icon" alt="Marketplace" />
+                                <img
+                                    src={marketPlaceIcon}
+                                    className="header-icon"
+                                    alt="Marketplace"
+                                />
                                 Marketplace
                             </Link>
-                            {isLoggedIn && (
-                                <Link to="/devices" className="nav-link">
-                                    <img src={myDevicesIcon} className="header-icon" alt="My Devices" />
-                                    My Devices
-                                </Link>
+
+                            {isLoggedIn && role === "consumer" && (
+                                <>
+                                    <Link to="/devices" className="nav-link">
+                                        <img
+                                            src={myDevicesIcon}
+                                            className="header-icon"
+                                            alt="My Devices"
+                                        />
+                                        My Devices
+                                    </Link>
+                                    <Link to="/register-device" className="nav-link">
+                                        <img
+                                            src={deviceRegisterIcon}
+                                            className="header-icon"
+                                            alt="Register"
+                                        />
+                                        Register Device
+                                    </Link>
+                                </>
+                            )}
+
+                            {isLoggedIn && role === "retailer" && (
+                                <>
+                                    <Link to="/register-device" className="nav-link">
+                                        <img
+                                            src={deviceRegisterIcon}
+                                            className="header-icon"
+                                            alt="Register"
+                                        />
+                                        Register Device
+                                    </Link>
+                                    <button onClick={openRepairLogPopup} className="nav-link">
+                                        <img
+                                            src={deviceUpdateIcon}
+                                            className="header-icon"
+                                            alt="Repair Log"
+                                        />
+                                        Add Repair Log
+                                    </button>
+                                    <AddRepairLogPopup isOpen={isRepairLogPopupOpen} onClose={closeRepairLogPopup} />
+                                </>
                             )}
                         </Group>
                     </div>
@@ -54,10 +117,16 @@ export function Header() {
                                 />
                             ) : (
                                 <>
-                                    <Button className="login-btn" onClick={() => navigate("/login")}>
+                                    <Button
+                                        className="login-btn"
+                                        onClick={() => navigate("/login")}
+                                    >
                                         Login
                                     </Button>
-                                    <Button className="signup-btn" onClick={() => navigate("/register")}>
+                                    <Button
+                                        className="signup-btn"
+                                        onClick={() => navigate("/register")}
+                                    >
                                         Sign Up
                                     </Button>
                                 </>

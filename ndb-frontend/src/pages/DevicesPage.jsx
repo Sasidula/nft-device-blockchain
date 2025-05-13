@@ -75,8 +75,20 @@ export const DevicesPage = () => {
                 <div className="action-section">
                     <Text className="action-title">Device Action</Text>
                     <Group className="action-buttons">
-                        <Button size="md" className="register-btn">Register New Device</Button>
-                        <Button size="md" className="report-btn">Report Lost/Stolen</Button>
+                        <Button
+                            size="md"
+                            className="register-btn"
+                            onClick={() => navigate("/register")}
+                        >
+                            Register New Device
+                        </Button>
+                        <Button
+                            size="md"
+                            className="report-btn"
+                            onClick={() => navigate("/")}
+                        >
+                            Report Lost/Stolen
+                        </Button>
                     </Group>
                 </div>
             </div>
