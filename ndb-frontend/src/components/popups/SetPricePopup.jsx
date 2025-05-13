@@ -1,18 +1,21 @@
-import React, { useState } from "react"
-import { PopupWrapper } from "../shared/PopupWrapper"
-import { DollarSign } from "lucide-react"
-import { Slider } from "@mantine/core"
+import React, { useState } from "react";
+import { PopupWrapper } from "../shared/PopupWrapper";
+import { DollarSign } from "lucide-react";
+import { Slider } from "@mantine/core";
+import "./SetPricePopup.css";
+
 export const SetPricePopup = ({ isOpen, onClose, initialPrice }) => {
-    const [price, setPrice] = useState(initialPrice)
+    const [price, setPrice] = useState(initialPrice);
+
     return (
         <PopupWrapper isOpen={isOpen} onClose={onClose}>
-            <div className="space-y-6">
-                <div className="bg-white rounded-lg p-4 shadow">
-                    <DollarSign className="text-gray-500 mb-4" size={24} />
-                    <h3 className="font-medium text-gray-900">Set Price</h3>
-                    <p className="text-gray-600">Set price to item you wish to sell.</p>
+            <div className="price-popup-wrapper">
+                <div className="price-header-box">
+                    <DollarSign className="price-icon" size={24} />
+                    <h3 className="price-title">Set Price</h3>
+                    <p className="price-description">Set price to item you wish to sell.</p>
                 </div>
-                <div className="space-y-4">
+                <div className="price-slider-section">
                     <Slider
                         value={price}
                         onChange={setPrice}
@@ -26,10 +29,10 @@ export const SetPricePopup = ({ isOpen, onClose, initialPrice }) => {
                             }
                         }}
                     />
-                    <div className="flex justify-end">
+                    <div className="price-button-container">
                         <button
                             onClick={onClose}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                            className="price-confirm-button"
                         >
                             Confirm
                         </button>
@@ -37,5 +40,5 @@ export const SetPricePopup = ({ isOpen, onClose, initialPrice }) => {
                 </div>
             </div>
         </PopupWrapper>
-    )
-}
+    );
+};

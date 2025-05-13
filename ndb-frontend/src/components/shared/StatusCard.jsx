@@ -1,4 +1,6 @@
 import React from "react"
+import "./StatusCard.css"
+
 export const StatusCard = ({
                                icon: Icon,
                                title,
@@ -7,18 +9,23 @@ export const StatusCard = ({
                                onButtonClick
                            }) => {
     return (
-        <div className="bg-white rounded-lg shadow p-4 relative">
-            <div className="absolute top-4 left-4">
-                <Icon size={24} className="text-gray-500" />
+        <div className="status-card">
+            {/* Icon with rounded background */}
+            <div className="icon-container">
+                <Icon size={28} className="text-black" />
             </div>
-            <div className="mt-12">
-                <div className="text-gray-600">{title}</div>
-                <div className="text-lg font-semibold mt-1">{value}</div>
+
+            {/* Title & Value */}
+            <div className="text-container">
+                <div className="title">{title}</div>
+                <div className="value">{value}</div>
             </div>
+
+            {/* Button */}
             {buttonText && (
                 <button
                     onClick={onButtonClick}
-                    className="absolute bottom-4 right-4 text-blue-600 hover:text-blue-700 font-medium"
+                    className="view-button"
                 >
                     {buttonText}
                 </button>

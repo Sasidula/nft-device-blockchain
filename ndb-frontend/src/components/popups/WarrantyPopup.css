@@ -1,0 +1,56 @@
+.warranty-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 2rem;
+}
+
+.warranty-header-card {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.warranty-icon {
+    color: #6b7280; /* text-gray-500 */
+    margin-bottom: 1rem;
+}
+
+.warranty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.warranty-description {
+    color: #4b5563; /* text-gray-600 */
+    font-size: 0.95rem;
+}
+
+.warranty-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.warranty-note-section {
+    margin-top: 1rem;
+}
+
+.note-heading {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.note-box {
+    background-color: #f9fafb; /* gray-50 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.note-text {
+    color: #4b5563; /* text-gray-600 */
+    font-size: 0.95rem;
+}

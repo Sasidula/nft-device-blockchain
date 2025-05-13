@@ -1,4 +1,5 @@
 import React from "react"
+
 export const IconListItem = ({
                                  icon: Icon,
                                  label,
@@ -7,14 +8,14 @@ export const IconListItem = ({
                              }) => {
     return (
         <>
-            <div className="flex items-center py-3">
-                <div className="flex items-center w-48">
-                    <Icon size={20} className="text-gray-500 mr-3" />
-                    <span className="text-gray-600">{label}</span>
+            <div className="icon-list-item">
+                <div className="icon-label">
+                    <Icon size={30} />
+                    <span>{label}</span>
                 </div>
-                <span className="text-gray-900">{value}</span>
+                <div className="icon-value">{value}</div>
             </div>
-            {showDivider && <div className="border-b border-gray-200" />}
+            {showDivider && <div className="divider" />}
         </>
     )
 }

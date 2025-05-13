@@ -26,7 +26,7 @@ export function Header() {
                         <img src={traceTech} className="trace-tech" alt="TraceTech Logo" />
                         <Text className="logo">TraceTech</Text>
                         <Group gap="lg">
-                            <Link to="/home" className="nav-link">
+                            <Link to="/" className="nav-link">
                                 <img src={homeIcon} className="header-icon" alt="Home" />
                                 Home
                             </Link>

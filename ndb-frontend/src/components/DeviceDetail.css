@@ -1,0 +1,127 @@
+.device-detail-container {
+    padding: 6rem;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+.page-title {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.image-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.device-image {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    padding-left: 7rem;
+    padding-right: 7rem;
+}
+/* Section Titles */
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+}
+
+.sell-button-container {
+    text-align: left;
+    margin-top: 1rem; /* optional spacing */
+    padding-left: 7rem;
+}
+
+.sell-button {
+    background-color: #0D99FF;
+    color: white;
+    min-width: 100px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 0.75rem; /* rounded-md */
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.sell-button:hover {
+    background-color: #2563eb;
+}
+
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.icon-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+
+.icon-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #4b5563; /* Gray-600 */
+    font-weight: 500;
+}
+
+.icon-label svg {
+    color: #6b7280; /* Gray-500 */
+}
+
+.icon-value {
+    color: #111827; /* Gray-900 */
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.divider {
+    border-bottom: 1px solid #e5e7eb; /* Gray-200 */
+}
+
+.status-grid {
+    display: flex;
+    justify-content: space-between; /* Spaces out the cards evenly */
+    gap: 1.5rem; /* Adjust the gap as needed */
+    flex-wrap: wrap; /* Ensures that cards wrap to the next line on smaller screens */
+}
+
+.history-entry {
+    background-color: #f9f8ff;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.history-title {
+    font-size: 18px; /* text-4xl */
+    font-weight: bold;
+    color: #1f2937;
+}

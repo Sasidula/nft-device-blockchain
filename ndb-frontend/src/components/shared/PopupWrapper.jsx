@@ -1,26 +1,29 @@
-import React from "react"
-import { Modal } from "@mantine/core"
-import { ArrowLeft } from "lucide-react"
+import React from "react";
+import { Modal } from "@mantine/core";
+import { ArrowLeft } from "lucide-react";
+import "./PopupWrapper.css";
+
 export const PopupWrapper = ({ isOpen, onClose, children, title }) => {
     return (
         <Modal
             opened={isOpen}
             onClose={onClose}
-            size="lg"
+            size="xl"
             padding="xl"
+            yOffset="100px"
             title={
-                <div className="flex items-center">
+                <div className="popup-header">
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-gray-100 rounded-full mr-4"
+                        className="popup-close-button"
                     >
                         <ArrowLeft size={20} />
                     </button>
-                    {title && <h2 className="text-xl font-semibold">{title}</h2>}
+                    {title && <h2 className="popup-title">{title}</h2>}
                 </div>
             }
         >
             {children}
         </Modal>
-    )
-}
+    );
+};

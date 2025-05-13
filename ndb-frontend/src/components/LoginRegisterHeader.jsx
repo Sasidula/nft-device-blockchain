@@ -10,7 +10,7 @@ export function LoginRegisterHeader() {
 
     return (
         <div className="header-top">
-            <Link to="/home">
+            <Link to="/">
                 <img src={backIcon} className="back-icon" alt="back" />
             </Link>
 

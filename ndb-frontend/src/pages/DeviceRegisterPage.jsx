@@ -280,11 +280,17 @@ export const DeviceRegisterPage = () => {
                             />
                         </div>
                     </div>
-
-                    <textarea
-                        placeholder="Upload Device Image"
-                        className="textarea-field"
-                    />
+                    <div className= "device-image">
+                        <div className="form-group">
+                            <label className="form-grid-text">Upload Device Image</label>
+                            <input
+                                type="file"
+                                id="deviceImage"
+                                className="input-field-image"
+                                accept="image/*"
+                            />
+                        </div>
+                    </div>
                 </section>
 
                 {/* Owner Info */}

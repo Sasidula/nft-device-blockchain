@@ -1,0 +1,64 @@
+/* Styling for StatusCard component */
+.status-card {
+    background-color: #f9f8ff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    min-width: 930px;
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon container with rounded background */
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Title and Value container */
+.text-container {
+    margin-left: 1rem;
+    flex-grow: 1;
+}
+
+/* Title styling */
+.title {
+    font-size: 0.875rem;
+    color: #000;
+    font-weight: 600;
+}
+
+/* Value styling */
+.value {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+/* Button styling */
+.view-button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #3b82f6;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.view-button:hover {
+    color: #2563eb;
+}
