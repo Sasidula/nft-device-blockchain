@@ -13,6 +13,7 @@ export const DeviceRegisterPage = () => {
         modelNumber: '',
         deviceType: '',
         price: '',
+        releaseDate: '',
         warrantyStart: '',
         warrantyEnd: '',
         note: '',
@@ -86,7 +87,7 @@ export const DeviceRegisterPage = () => {
                 originalPrice: parseFloat(customerData.price),
                 //releaseDate: new Date(customerData.warrantyStart).toISOString(),
                 //purchaseDate: new Date().toISOString(),
-                releaseDate: "2023-09-12T00:00:00.000+00:00",
+                releaseDate: customerData.releaseDate,
                 purchaseDate: new Date().toISOString(),
                 imageBlob: imageBlob,
                 nftTokenId: null,
@@ -123,10 +124,10 @@ export const DeviceRegisterPage = () => {
             // Step 5: Register warranty
             const warrantyPayload = {
                 device: deviceId,
-                //start_date: customerData.warrantyStart,
-                //end_date: customerData.warrantyEnd,
-                start_date: null,
-                end_date: null,
+                start_date: customerData.warrantyStart,
+                end_date: customerData.warrantyEnd,
+                //start_date: null,
+                //end_date: null,
                 added_by: {
                     user: user.user
                 },
@@ -165,10 +166,10 @@ export const DeviceRegisterPage = () => {
                 <div className="device-register-page-container">
                     <div className="device-register-text">
                         <Title order={1} className="device-register-title">
-                            Device Marketplace
+                            Register New Device
                         </Title>
                         <Text size="xl" className="device-register-subtext">
-                            Browse verified devices, compare prices, and buy with confidence.
+                            Secure your device ownership on the blockchain and unlock its true value.
                         </Text>
                     </div>
                 </div>
@@ -251,6 +252,18 @@ export const DeviceRegisterPage = () => {
                                 className="input-field"
                             />
                         </div>
+
+                        <div className="form-group">
+                            <label className="form-grid-text">Enter Release Date</label>
+                            <input
+                                type="date"
+                                name="releaseDate"
+                                value={customerData.releaseDate}
+                                onChange={handleChange}
+                                placeholder="Enter Release Date"
+                                className="input-field"
+                            />
+                        </div>
                     </div>
                 </section>
 
@@ -261,7 +274,7 @@ export const DeviceRegisterPage = () => {
                         <div className="form-group">
                             <label className="form-grid-text">Warranty Start Date</label>
                             <input
-                                type="text"
+                                type="date"
                                 name="warrantyStart"
                                 value={customerData.warrantyStart}
                                 onChange={handleChange}
@@ -273,7 +286,7 @@ export const DeviceRegisterPage = () => {
                         <div className="form-group">
                             <label className="form-grid-text">Warranty End Date</label>
                             <input
-                                type="text"
+                                type="date"
                                 name="warrantyEnd"
                                 value={customerData.warrantyEnd}
                                 onChange={handleChange}
