@@ -20,25 +20,7 @@ export function Header() {
     const closeRepairLogPopup = () => setIsRepairLogPopupOpen(false);
 
 
-    // ✅ Fixed: Properly parse user from localStorage
-    useEffect(() => {
-        const userString = localStorage.getItem("user");
-
-        if (userString) {
-            try {
-                const user = JSON.parse(userString);
-                setIsLoggedIn(true);
-                setRole(user.role);
-            } catch (err) {
-                console.error("Error parsing user from localStorage:", err);
-                setIsLoggedIn(false);
-                setRole(null);
-            }
-        } else {
-            setIsLoggedIn(false);
-            setRole(null);
-        }
-    }, []);
+    const user = JSON.parse(localStorage.getItem("user"));
 
     return (
         <header className="header">
@@ -61,7 +43,7 @@ export function Header() {
                                 Marketplace
                             </Link>
 
-                            {isLoggedIn && role === "consumer" && (
+                            {user.role === "CONSUMER" && (
                                 <>
                                     <Link to="/devices" className="nav-link">
                                         <img
@@ -71,18 +53,10 @@ export function Header() {
                                         />
                                         My Devices
                                     </Link>
-                                    <Link to="/register-device" className="nav-link">
-                                        <img
-                                            src={deviceRegisterIcon}
-                                            className="header-icon"
-                                            alt="Register"
-                                        />
-                                        Register Device
-                                    </Link>
                                 </>
                             )}
 
-                            {isLoggedIn && role === "retailer" && (
+                            {user.role === "RETAILER" && (
                                 <>
                                     <Link to="/register-device" className="nav-link">
                                         <img
@@ -108,7 +82,7 @@ export function Header() {
 
                     <div className="header-right">
                         <Group>
-                            {isLoggedIn ? (
+                            {user != null ? (
                                 <img
                                     src={profileIcon}
                                     className="profile-icon"

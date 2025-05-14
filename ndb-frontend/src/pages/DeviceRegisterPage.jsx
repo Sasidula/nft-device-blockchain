@@ -59,6 +59,9 @@ export const DeviceRegisterPage = () => {
                 return;
             }
 
+            let role;
+            role = user.role;
+
             // 2. Convert image to blob
             let imageBlob = null;
             if (imageFile) {
