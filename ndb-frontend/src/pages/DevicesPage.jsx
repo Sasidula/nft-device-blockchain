@@ -5,10 +5,12 @@ import { SearchBar } from "../components/SearchBar.jsx";
 import { DeviceCard } from "../components/DeviceCard.jsx";
 import "../components/DevicesPage.css";
 import { Button, Group, Text, Title } from "@mantine/core";
+import { ReportDevicePopup } from "../components/popups/ReportDevicePopup.jsx";
 
 export const DevicesPage = () => {
     const [devices, setDevices] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const [showReportDevicePopup, setShowReportDevicePopup] = useState(false)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -77,21 +79,18 @@ export const DevicesPage = () => {
                     <Group className="action-buttons">
                         <Button
                             size="md"
-                            className="register-btn"
-                            onClick={() => navigate("/deviceRegister")}
-                        >
-                            Register New Device
-                        </Button>
-                        <Button
-                            size="md"
                             className="report-btn"
-                            onClick={() => navigate("/")}
+                            onClick={() => setShowReportDevicePopup(true)}
                         >
                             Report Lost/Stolen
                         </Button>
                     </Group>
                 </div>
             </div>
+            <ReportDevicePopup
+                isOpen={showReportDevicePopup}
+                onClose={() => setShowReportDevicePopup(false)}
+            />
             <Footer />
         </div>
     );

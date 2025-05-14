@@ -6,6 +6,7 @@ import "./HeroSection.css";
 import heroImage from '../assects/hero-image.jpg';
 
 export function HeroSection() {
+
     return (
         <section className="hero-section">
             <Container size="xl">

@@ -95,21 +95,12 @@
     transition: background-color 0.3s ease;
 }
 
-.register-btn {
+.report-btn {
     background-color: #0D99FF;
     transition: background-color 0.3s ease;
-}
-
-.register-btn:hover {
-    background-color: #2563eb;
-}
-
-.report-btn {
-    background-color: #f3f4f6;
-    transition: background-color 0.3s ease;
-    color: #0D99FF;
 }
 
 .report-btn:hover {
-    background-color: #0D99FF;
+    background-color: #2563eb;
 }
+

@@ -10,6 +10,8 @@ import traceTech from "../assects/traceTech.png";
 import deviceRegisterIcon from "../assects/device-register-icon.png";
 import deviceUpdateIcon from "../assects/device-update-icon.png";
 import { AddRepairLogPopup } from "./popups/AddRepairLogPopup.jsx";
+import { UserProfilePopup } from "./popups/UserProfilePopup";
+
 
 export function Header() {
     const navigate = useNavigate();
@@ -18,6 +20,7 @@ export function Header() {
     const [isRepairLogPopupOpen, setIsRepairLogPopupOpen] = useState(false);
     const openRepairLogPopup = () => setIsRepairLogPopupOpen(true);
     const closeRepairLogPopup = () => setIsRepairLogPopupOpen(false);
+    const [showProfilePopup, setShowProfilePopup] = useState(false)
 
 
     const user = JSON.parse(localStorage.getItem("user"));
@@ -87,7 +90,7 @@ export function Header() {
                                     src={profileIcon}
                                     className="profile-icon"
                                     alt="Profile"
-                                    onClick={() => navigate("/profile")}
+                                    onClick={() => setShowProfilePopup(true)}
                                 />
                             ) : (
                                 <>
@@ -109,6 +112,10 @@ export function Header() {
                     </div>
                 </div>
             </Container>
+            <UserProfilePopup
+                isOpen={showProfilePopup}
+                onClose={() => setShowProfilePopup(false)}
+            />
         </header>
     );
 }

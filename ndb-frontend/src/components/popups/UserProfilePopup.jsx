@@ -1,71 +1,113 @@
 import React, { useState } from "react"
 import { PopupWrapper } from "../shared/PopupWrapper"
 import { User, Mail, Lock } from "lucide-react"
+import "./UserProfilePopup.css"
+
 export const UserProfilePopup = ({ isOpen, onClose }) => {
     const [isEditing, setIsEditing] = useState(false)
+    const [name, setName] = useState("John Doe")
     const [email, setEmail] = useState("john.doe@example.com")
     const [confirmEmail, setConfirmEmail] = useState("john.doe@example.com")
     const [password, setPassword] = useState("********")
+
     const handleSave = () => {
         if (email === confirmEmail) {
             // Handle save logic here
             setIsEditing(false)
         }
     }
+
+    const handleLogout = () => {
+        // Add your logout logic here
+        console.log("User logged out")
+        onClose()
+    }
+
     return (
         <PopupWrapper isOpen={isOpen} onClose={onClose}>
-            <div className="text-center mb-8">
-                <div className="inline-block p-4 bg-gray-100 rounded-full mb-4">
-                    <User size={48} className="text-gray-700" />
+            <div className="profile-header">
+                <div className="profile-icon">
+                    <User size={48} className="icon-color" />
                 </div>
-                <h2 className="text-2xl font-semibold">John Doe</h2>
+                <h2 className="profile-name">{name}</h2>
             </div>
-            <div className="space-y-6">
-                <div className="space-y-4">
-                    <div className="flex items-center">
-                        <Mail className="text-gray-500 mr-3" size={20} />
+            <div className="profile-fields">
+                <div className="field-group">
+                    {/* Name Field */}
+                    <div className="field">
+                        <User className="field-icon" size={20} />
                         {isEditing ? (
-                            <div className="space-y-2 flex-1">
+                            <div className="field-inputs">
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                    className="input-field"
+                                    placeholder="Enter name"
+                                />
+                            </div>
+                        ) : (
+                            <span className="field-text">{name}</span>
+                        )}
+                    </div>
+
+                    {/* Email Field */}
+                    <div className="field">
+                        <Mail className="field-icon" size={20} />
+                        {isEditing ? (
+                            <div className="field-inputs">
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={e => setEmail(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                    className="input-field"
                                     placeholder="Enter email"
-                                />
-                                <input
-                                    type="email"
-                                    value={confirmEmail}
-                                    onChange={e => setConfirmEmail(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Confirm email"
                                 />
                             </div>
                         ) : (
-                            <span className="text-gray-700">{email}</span>
+                            <span className="field-text">{email}</span>
                         )}
                     </div>
-                    <div className="flex items-center">
-                        <Lock className="text-gray-500 mr-3" size={20} />
+
+                    {/* Password Field */}
+                    <div className="field">
+                        <Lock className="field-icon" size={20} />
                         {isEditing ? (
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Enter new password"
-                            />
+                            <div className="field-inputs">
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    className="input-field"
+                                    placeholder="Enter new password"
+                                />
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    className="input-field"
+                                    placeholder="Confirm password"
+                                />
+                            </div>
                         ) : (
-                            <span className="text-gray-700">{password}</span>
+                            <span className="field-text">{password}</span>
                         )}
                     </div>
                 </div>
-                <div className="flex justify-end">
+
+                {/* Action Buttons */}
+                <div className="button-row">
                     <button
                         onClick={isEditing ? handleSave : () => setIsEditing(true)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                        className="submit-btn"
                     >
                         {isEditing ? "Save" : "Edit Profile"}
+                    </button>
+                    <button
+                        onClick={handleLogout}
+                        className="logout-btn"
+                    >
+                        Logout
                     </button>
                 </div>
             </div>
