@@ -82,7 +82,7 @@ export function Header() {
 
                     <div className="header-right">
                         <Group>
-                            {user != null ? (
+                            {user !== null ? (
                                 <img
                                     src={profileIcon}
                                     className="profile-icon"
