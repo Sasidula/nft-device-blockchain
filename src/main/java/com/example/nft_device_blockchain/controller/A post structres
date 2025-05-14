@@ -90,12 +90,12 @@ http://localhost:8080/api/devices
   "releaseDate": "2023-09-12T00:00:00.000+00:00",
   "purchaseDate": "2024-01-10T00:00:00.000+00:00",
   "imageBlob": null,
-  "nftTokenId": "NFT123456789",
+  "nftTokenId": null,
   "registeredBy": {
-    "userId": 1
+    "user": 1
   },
   "currentOwner": {
-    "userId": 1
+    "user": 1
   },
   "blacklisted": false,
   "createdAt": "2024-01-10T00:00:00.000+00:00"
@@ -123,7 +123,7 @@ http://localhost:8080/api/warranties
   "start_date": "2024-01-01",
   "end_date": "2025-01-01",
   "added_by": {
-    "userId": 1
+    "user": 1
   },
   "notes": "1-year warranty for tablet"
 }

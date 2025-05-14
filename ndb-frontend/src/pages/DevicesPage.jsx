@@ -78,7 +78,7 @@ export const DevicesPage = () => {
                         <Button
                             size="md"
                             className="register-btn"
-                            onClick={() => navigate("/register")}
+                            onClick={() => navigate("/deviceRegister")}
                         >
                             Register New Device
                         </Button>

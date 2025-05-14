@@ -207,4 +207,13 @@ public class Devices {
     public void setSpec(List<Spec> spec) {
         this.spec = spec;
     }
+
+    public List<Warranty_logs> getWarrantyLogs() {
+        return warrantyLogs;
+    }
+
+    public void setWarrantyLogs(List<Warranty_logs> warrantyLogs) {
+        this.warrantyLogs = warrantyLogs;
+    }
+
 }

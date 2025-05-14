@@ -3,6 +3,7 @@ import '../components/DeviceRegisterPage.css';
 import { Header } from "../components/Header.jsx";
 import { Text, Title } from "@mantine/core";
 import {Footer} from "../components/Footer.jsx";
+import axios from 'axios';
 
 export const DeviceRegisterPage = () => {
     const [customerData, setCustomerData] = useState({
@@ -28,12 +29,131 @@ export const DeviceRegisterPage = () => {
         ownerEmail: ''
     });
 
+    const [imageFile, setImageFile] = useState(null);
+
+
     const handleChange = (e) => {
         setCustomerData({
             ...customerData,
             [e.target.name]: e.target.value
         });
     };
+
+    const handleSubmit = async () => {
+        try {
+            // 1. Get owner info using email
+            const email = customerData.ownerEmail;
+            const userResponse = await axios.get(`http://localhost:8080/api/user/email/${email}`);
+            const owner = userResponse.data[0];
+
+            if (!owner || !owner.user) {
+                alert("Invalid email or user not found.");
+                return;
+            }
+
+            const userId = owner.user;
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user?.user) {
+                console.error("User not found in localStorage.");
+                return;
+            }
+
+            // 2. Convert image to blob
+            let imageBlob = null;
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(imageFile);
+
+                await new Promise((resolve) => {
+                    reader.onloadend = () => {
+                        imageBlob = Array.from(new Uint8Array(reader.result)); // convert to array of bytes
+                        resolve();
+                    };
+                });
+            }
+
+            // 2. Construct payload
+            const devicePayload = {
+                name: customerData.name,
+                brand: customerData.brand,
+                modelNumber: customerData.modelNumber,
+                serialNumber: customerData.serialNumber,
+                deviceType: customerData.deviceType,
+                originalPrice: parseFloat(customerData.price),
+                //releaseDate: new Date(customerData.warrantyStart).toISOString(),
+                //purchaseDate: new Date().toISOString(),
+                releaseDate: "2023-09-12T00:00:00.000+00:00",
+                purchaseDate: new Date().toISOString(),
+                imageBlob: imageBlob,
+                nftTokenId: null,
+                registeredBy: {
+                    user: user.user
+                },
+                currentOwner: {
+                    user: userId
+                },
+                blacklisted: false,
+                //createdAt:null
+                createdAt: new Date().toISOString()
+            };
+
+            const deviceResponse = await axios.post('http://localhost:8080/api/devices', devicePayload);
+            const deviceId = deviceResponse.data.deviceId;
+
+            // Step 4: Register specifications
+            const specsPayload = {
+                processor: customerData.cpu,
+                storage: customerData.storage,
+                ram: customerData.ram,
+                display: customerData.display,
+                battery: customerData.battery,
+                os: customerData.os,
+                ports: customerData.ports,
+                camera: customerData.camera,
+                powerAdapter: customerData.adapter,
+                device: deviceId
+            };
+
+            await axios.post('http://localhost:8080/api/specs', specsPayload);
+
+            // Step 5: Register warranty
+            const warrantyPayload = {
+                device: deviceId,
+                //start_date: customerData.warrantyStart,
+                //end_date: customerData.warrantyEnd,
+                start_date: null,
+                end_date: null,
+                added_by: {
+                    user: user.user
+                },
+                notes: customerData.note
+            };
+
+            await axios.post('http://localhost:8080/api/warranties', warrantyPayload);
+
+            // Step 5: Register ownership
+            const ownershipPayload = {
+                device_id: deviceId,
+                from_user_id: user.user,
+                to_user_id: userId,
+                transfer_date: new Date().toISOString(),
+                transaction_hash: null,
+                publicKey: null,
+                privateKey: null
+            };
+
+            await axios.post('http://localhost:8080/api/history', ownershipPayload);
+
+            alert("Device, specifications, and warranty registered successfully!");
+            window.location.href = "/devices";
+
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert("Something went wrong during device registration.");
+        }
+    };
+
 
     return (
         <div className="register-devices">
@@ -58,6 +178,7 @@ export const DeviceRegisterPage = () => {
                             <label className="form-grid-text">Enter Device Name</label>
                             <input
                                 type="text"
+                                name="name"
                                 value={customerData.name}
                                 onChange={handleChange}
                                 placeholder="Enter Device Name"
@@ -288,6 +409,7 @@ export const DeviceRegisterPage = () => {
                                 id="deviceImage"
                                 className="input-field-image"
                                 accept="image/*"
+                                onChange={(e) => setImageFile(e.target.files[0])}
                             />
                         </div>
                     </div>
@@ -325,7 +447,9 @@ export const DeviceRegisterPage = () => {
                     <p className="link-text">Don’t have an account? Sign up</p>
                 </section>
 
-                <button className="submit-button">Register Device</button>
+                <button className="submit-button" onClick={handleSubmit}>
+                    Register Device
+                </button>
             </div>
         <div>
             <Footer/>
