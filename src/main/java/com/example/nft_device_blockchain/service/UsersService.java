@@ -105,34 +105,6 @@ public class UsersService {
         user.setRole(userDTO.getRole());
         usersRepository.save(user);
 
-        switch (user.getRole()) {
-            case RETAILER:
-                Optional<Retailer> optionalRetailer = retailerRepository.findByUser(user);
-                if (optionalRetailer.isPresent()) {
-                    Retailer retailer = optionalRetailer.get();
-                    retailer.setAddress(userDTO.getAddress());
-                    retailer.setPhone(userDTO.getPhone());
-                    retailer.setService(userDTO.getService());
-                    retailerRepository.save(retailer);
-                }
-                break;
-
-            case CONSUMER:
-                Optional<Consumer> optionalConsumer = consumerRepository.findByUser(user);
-                if (optionalConsumer.isPresent()) {
-                    Consumer consumer = optionalConsumer.get();
-                    consumer.setAddress(userDTO.getAddress());
-                    consumer.setPhone(userDTO.getPhone());
-                    consumer.setWalletAddress(userDTO.getWalletAddress());
-                    consumerRepository.save(consumer);
-                }
-                break;
-
-            case ADMIN:
-                // No extra entity to update
-                break;
-        }
-
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

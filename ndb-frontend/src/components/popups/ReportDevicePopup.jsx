@@ -1,18 +1,88 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import { PopupWrapper } from "../shared/PopupWrapper"
 import { AlertTriangle } from "lucide-react"
 import { DeviceCard } from "../DeviceCard"
 import "./ReportDevicePopup.css"
 
-export const ReportDevicePopup = ({ isOpen, onClose, devices }) => {
+export const ReportDevicePopup = ({ isOpen, onClose }) => {
     const [selectedDevice, setSelectedDevice] = useState(null)
     const [description, setDescription] = useState("")
     const [email, setEmail] = useState("")
+    const [devices, setDevices] = useState([]);
 
-    const handleSubmit = () => {
-        // Handle submission logic here
-        onClose()
-    }
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    useEffect(() => {
+        if (user?.user) {
+            fetch(`http://localhost:8080/api/devices/owner/${user.user}`)
+                .then(res => res.json())
+                .then(data => setDevices(data))
+                .catch(err => console.error("Failed to fetch devices", err));
+        }
+    }, []);
+
+    const handleSubmit = async () => {
+        if (!selectedDevice) return;
+
+        if (!description.trim() || !email.trim()) {
+            alert("Please fill in both the description and email.");
+            return;
+        }
+
+        try {
+            // 1. Get device details
+            const response = await fetch(`http://localhost:8080/api/devices/${selectedDevice}`);
+            if (!response.ok) {
+                alert("Failed to get device info.");
+                return;
+            }
+
+            const deviceData = await response.json();
+
+            // 2. Mark it blacklisted
+            const updatedDevice = {
+                name: deviceData.name,
+                brand: deviceData.brand,
+                modelNumber: deviceData.modelNumber,
+                serialNumber: deviceData.serialNumber,
+                deviceType: deviceData.deviceType,
+                originalPrice: deviceData.originalPrice,
+                releaseDate: deviceData.releaseDate,
+                purchaseDate: deviceData.purchaseDate,
+                imageBlob: deviceData.imageBlob,
+                nftTokenId: deviceData.nftTokenId,
+                registeredBy: {
+                    user: deviceData.registeredBy.user
+                },
+                currentOwner: {
+                    user: user.user
+                },
+                blacklisted: false,
+                createdAt: deviceData.createdAt
+            };
+
+            // 3. Update device via PUT
+            const putResponse = await fetch(`http://localhost:8080/api/devices/${selectedDevice}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedDevice)
+            });
+
+            console.log("PUT response:", putResponse);
+
+            if (putResponse.ok) {
+                alert("Device successfully reported and flagged as blacklisted.");
+                onClose();
+            } else {
+                alert("Failed to update the device.");
+            }
+        } catch (err) {
+            console.error("Error reporting device:", err);
+            alert("An error occurred while reporting the device.");
+        }
+    };
 
     return (
         <PopupWrapper isOpen={isOpen} onClose={onClose}>
@@ -40,11 +110,9 @@ export const ReportDevicePopup = ({ isOpen, onClose, devices }) => {
                     <div className="device-grid">
                         {devices.map(device => (
                             <div
-                                key={device.id}
-                                onClick={() => setSelectedDevice(device.id)}
-                                className={`device-item ${
-                                    selectedDevice === device.id ? "selected" : ""
-                                }`}
+                                key={device.deviceId}
+                                onClick={() => setSelectedDevice(device.deviceId)}
+                                className={`device-item ${selectedDevice === device.deviceId ? "selected" : ""}`}
                             >
                                 <DeviceCard
                                     type={device.type}

@@ -12,18 +12,29 @@ import deviceUpdateIcon from "../assects/device-update-icon.png";
 import { AddRepairLogPopup } from "./popups/AddRepairLogPopup.jsx";
 import { UserProfilePopup } from "./popups/UserProfilePopup";
 
-
 export function Header() {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [role, setRole] = useState(null);
     const [isRepairLogPopupOpen, setIsRepairLogPopupOpen] = useState(false);
+    const [showProfilePopup, setShowProfilePopup] = useState(false);
+
     const openRepairLogPopup = () => setIsRepairLogPopupOpen(true);
     const closeRepairLogPopup = () => setIsRepairLogPopupOpen(false);
-    const [showProfilePopup, setShowProfilePopup] = useState(false)
 
-
+    // Get user from localStorage
     const user = JSON.parse(localStorage.getItem("user"));
+
+    // Update isLoggedIn and role based on user
+    useEffect(() => {
+        if (user) {
+            setIsLoggedIn(true);
+            setRole(user.role);
+        } else {
+            setIsLoggedIn(false);
+            setRole(null);
+        }
+    }, []); // Empty dependency array to run once on mount
 
     return (
         <header className="header">
@@ -45,23 +56,19 @@ export function Header() {
                                 />
                                 Marketplace
                             </Link>
-
-                            {user.role === "CONSUMER" && (
-                                <>
-                                    <Link to="/devices" className="nav-link">
-                                        <img
-                                            src={myDevicesIcon}
-                                            className="header-icon"
-                                            alt="My Devices"
-                                        />
-                                        My Devices
-                                    </Link>
-                                </>
+                            {user && user.role === "CONSUMER" && (
+                                <Link to="/devices" className="nav-link">
+                                    <img
+                                        src={myDevicesIcon}
+                                        className="header-icon"
+                                        alt="My Devices"
+                                    />
+                                    My Devices
+                                </Link>
                             )}
-
-                            {user.role === "RETAILER" && (
+                            {user && user.role === "RETAILER" && (
                                 <>
-                                    <Link to="/register-device" className="nav-link">
+                                    <Link to="/deviceRegister" className="nav-link">
                                         <img
                                             src={deviceRegisterIcon}
                                             className="header-icon"
@@ -77,7 +84,10 @@ export function Header() {
                                         />
                                         Add Repair Log
                                     </button>
-                                    <AddRepairLogPopup isOpen={isRepairLogPopupOpen} onClose={closeRepairLogPopup} />
+                                    <AddRepairLogPopup
+                                        isOpen={isRepairLogPopupOpen}
+                                        onClose={closeRepairLogPopup}
+                                    />
                                 </>
                             )}
                         </Group>
@@ -85,7 +95,7 @@ export function Header() {
 
                     <div className="header-right">
                         <Group>
-                            {user !== null ? (
+                            {user ? (
                                 <img
                                     src={profileIcon}
                                     className="profile-icon"
@@ -119,3 +129,6 @@ export function Header() {
         </header>
     );
 }
+
+
+

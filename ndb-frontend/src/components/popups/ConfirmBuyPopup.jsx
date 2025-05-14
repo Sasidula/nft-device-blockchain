@@ -10,12 +10,83 @@ import {
 } from "lucide-react";
 import { IconListItem } from "../shared/IconList";
 import "./ConfirmBuyPopup.css";
+import axios from "axios";
 
 export const ConfirmBuyPopup = ({ isOpen, onClose, device }) => {
     const [publicKey, setPublicKey] = useState("");
 
     const specs = device?.ownership?.devices?.spec?.[0] || {};
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user?.user) {
+        console.error("User not found in localStorage.");
+        return;
+    }
+
+    const handleConfirm = async () => {
+        const userPublicKey = device.ownership.publicKey; // your localStorage key must include this
+        if (publicKey !== userPublicKey) {
+            alert("Public keys do not match!");
+            return;
+        }
+
+        const deviceData = device.ownership.devices;
+
+        // Construct updated device payload
+        const updatedDevice = {
+            name: deviceData.name,
+            brand: deviceData.brand,
+            modelNumber: deviceData.modelNumber,
+            serialNumber: deviceData.serialNumber,
+            deviceType: deviceData.deviceType,
+            originalPrice: deviceData.originalPrice,
+            releaseDate: deviceData.releaseDate,
+            purchaseDate: deviceData.purchaseDate,
+            imageBlob: deviceData.imageBlob,
+            nftTokenId: deviceData.nftTokenId,
+            registeredBy: {
+                user: deviceData.registeredBy.user
+            },
+            currentOwner: {
+                user: user.user
+            },
+            blacklisted: deviceData.blacklisted,
+            createdAt: deviceData.createdAt
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/devices/${deviceData.deviceId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedDevice),
+            });
+
+            if (response.ok) {
+                alert("Device purchase confirmed!");
+                onClose(); // close popup
+            } else {
+                alert("Failed to confirm purchase.");
+            }
+        } catch (err) {
+            console.error("Error confirming device:", err);
+            alert("An error occurred.");
+        }
+
+        const ownershipPayload = {
+            device_id: deviceData.deviceId,
+            from_user_id: deviceData.currentOwner.user,
+            to_user_id: user.user,
+            transfer_date: new Date().toISOString(),
+            transaction_hash: null,
+            publicKey: null,
+            privateKey: null
+        };
+
+        await axios.post('http://localhost:8080/api/history', ownershipPayload);
+
+    };
 
 
     return (
@@ -40,8 +111,7 @@ export const ConfirmBuyPopup = ({ isOpen, onClose, device }) => {
                             />
                             <button
                                 className="confirm-button"
-                                onClick={onClose}
-                            >
+                                onClick={handleConfirm}>
                                 Confirm
                             </button>
                         </div>

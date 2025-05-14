@@ -11,6 +11,7 @@ export const DevicesPage = () => {
     const [devices, setDevices] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [showReportDevicePopup, setShowReportDevicePopup] = useState(false)
+    const [showAddRepairLogPopup, setShowAddRepairLogPopup] = useState(false)
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
