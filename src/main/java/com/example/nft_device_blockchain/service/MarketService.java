@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,7 @@ public class MarketService {
         market.setPrice(marketDTO.getPrice());
         market.setDevice(device);
         market.setOwnership(ownership);
+        market.setCreatedAt(new Date());
 
         marketRepository.save(market);
         return ResponseEntity.ok("Market entry created");

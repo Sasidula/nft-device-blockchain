@@ -5,12 +5,15 @@ import com.example.nft_device_blockchain.service.DevicesService;
 import com.example.nft_device_blockchain.service.Ownership_historyService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -53,9 +56,17 @@ public class Ownership_historyController {
         ownership.setTo_user(toUser);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         ownership.setTransfer_date(df.parse(dto.transfer_date));
-        ownership.setTransaction_hash(dto.transaction_hash);
-        ownership.setPublicKey(dto.publicKey);
-        ownership.setPrivateKey(dto.privateKey);
+        //ownership.setTransaction_hash(dto.transaction_hash);
+        //ownership.setPublicKey(dto.publicKey);
+        //ownership.setPrivateKey(dto.privateKey);
+
+        ownership.setTransaction_hash(UUID.randomUUID().toString()); // Simple UUID for transaction hash
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[32]; // 32 bytes for both keys
+        secureRandom.nextBytes(keyBytes);
+        ownership.setPublicKey(Base64.getEncoder().encodeToString(keyBytes));
+        secureRandom.nextBytes(keyBytes); // Generate new random bytes for private key
+        ownership.setPrivateKey(Base64.getEncoder().encodeToString(keyBytes));
 
         return ownership_historyService.addOwnership_history(ownership);
     }
@@ -100,9 +111,26 @@ public class Ownership_historyController {
     }
 
 
-    @GetMapping("/device/{id}")
+    /*@GetMapping("/devices/{id}")
     public List<Ownership_history> getOwnership_historyByDeviceId(@PathVariable int id) {
-        return ownership_historyService.getOwnership_historyByDeviceId(id);
+        Devices device = devicesRepository.findById(id).orElse(null);
+        return ownership_historyService.getOwnership_historyByDevice(device);
     }
+
+    @GetMapping("/device/{id}")
+    public Ownership_history getLatestOwnershipHistoryByDeviceId(@PathVariable int id) {
+        Devices device = devicesRepository.findById(id).orElse(null);
+        if (device == null) {
+            return null; // Or throw an exception if preferred
+        }
+        return ownership_historyService.getLatestOwnershipHistoryByDevice(device);
+    }*/
+
+    @GetMapping("/device/{id}")
+    public Ownership_history getLatestOwnershipHistory(@PathVariable int id) {
+        Devices device = devicesRepository.findById(id).orElse(null);
+        return ownership_historyService.getLatestOwnershipByDevice(device);
+    }
+
 
 }

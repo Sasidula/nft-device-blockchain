@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Header } from "../components/Header.jsx";
 import { Footer } from "../components/Footer.jsx";
 import { SearchBar } from "../components/SearchBar";
-import { DeviceCard } from "../components/DeviceCard";
+import { DeviceCard } from "../components/MarketDeviceCard";
 import { CategoryFilter } from "../components/CategoryFilter";
 import "../components/MarketPage.css";
 import {Text, Title} from "@mantine/core";
@@ -26,6 +26,9 @@ export const MarketPage = () => {
 
     const filteredDevices = marketDevices.filter((item) => {
         const device = item.ownership.devices;
+
+        const isAvailable = item.availability === true;
+
         const matchesCategory =
             selectedCategory === "All Devices" ||
             device.deviceType.toLowerCase() === selectedCategory.toLowerCase().slice(0, -1);
@@ -33,8 +36,9 @@ export const MarketPage = () => {
         const matchesSearch =
             device.name.toLowerCase().includes(searchText.toLowerCase());
 
-        return matchesCategory && matchesSearch;
+        return isAvailable && matchesCategory && matchesSearch;
     });
+
 
 
     return (
@@ -76,6 +80,7 @@ export const MarketPage = () => {
                                 name={device.name}
                                 price={item.price}
                                 isMarketCard={true}
+                                marketId={item.id}
                             />
                         );
                     })}

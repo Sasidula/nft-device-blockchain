@@ -32,6 +32,7 @@ public class Market {
     @JoinColumn(name = "ownership", referencedColumnName = "ownership_id")
     private Ownership_history ownership;
 
+
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Date createdAt;

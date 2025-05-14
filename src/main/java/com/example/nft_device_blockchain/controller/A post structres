@@ -51,6 +51,7 @@ http://localhost:8080/api/users
 
 
 Post market
+
 {
   "availability": true,
   "price": 280.99,

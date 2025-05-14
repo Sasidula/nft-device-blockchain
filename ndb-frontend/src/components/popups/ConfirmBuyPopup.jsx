@@ -11,8 +11,12 @@ import {
 import { IconListItem } from "../shared/IconList";
 import "./ConfirmBuyPopup.css";
 
-export const ConfirmBuyPopup = ({ isOpen, onClose }) => {
+export const ConfirmBuyPopup = ({ isOpen, onClose, device }) => {
     const [publicKey, setPublicKey] = useState("");
+
+    const specs = device?.ownership?.devices?.spec?.[0] || {};
+
+
 
     return (
         <PopupWrapper isOpen={isOpen} onClose={onClose}>
@@ -46,11 +50,11 @@ export const ConfirmBuyPopup = ({ isOpen, onClose }) => {
                 <div>
                     <h3 className="spec-title">Specifications</h3>
                     <div className="spec-box">
-                        <IconListItem icon={Cpu} label="Processor" value="Apple M3 Pro" />
-                        <IconListItem icon={HardDrive} label="Storage" value="512GB" />
-                        <IconListItem icon={BoxIcon} label="RAM" value="32GB" />
-                        <IconListItem icon={Monitor} label="Display" value='16" Liquid Retina XDR' />
-                        <IconListItem icon={Battery} label="Battery" value="Up to 22 hours" showDivider={false} />
+                        <IconListItem icon={Cpu} label="Processor" value={specs.processor || "Unknown"} />
+                        <IconListItem icon={HardDrive} label="Storage" value={specs.storage || "Unknown"} />
+                        <IconListItem icon={BoxIcon} label="RAM" value={specs.ram || "Unknown"} />
+                        <IconListItem icon={Monitor} label="Display" value={specs.display || "Unknown"} />
+                        <IconListItem icon={Battery} label="Battery" value={specs.battery || "Unknown"} showDivider={false} />
                     </div>
                 </div>
             </div>

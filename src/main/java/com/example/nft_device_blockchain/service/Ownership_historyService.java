@@ -1,7 +1,9 @@
 package com.example.nft_device_blockchain.service;
 
+import com.example.nft_device_blockchain.data.Devices;
 import com.example.nft_device_blockchain.data.Ownership_history;
 import com.example.nft_device_blockchain.data.Ownership_historyRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,9 +40,14 @@ public class Ownership_historyService {
         return ownership_historyRepository.save(ownership_history);
     }
 
-    public List<Ownership_history> getOwnership_historyByDeviceId(int device_id) {
-        return ownership_historyRepository.findByDeviceId(device_id);
+    /*public List<Ownership_history> getOwnership_historyByDevice(Devices device) {
+        return ownership_historyRepository.findByDeviceId(device);
+    }*/
+
+    public Ownership_history getLatestOwnershipByDevice(Devices device) {
+        return ownership_historyRepository.findLatestOwnershipByDevice(device, PageRequest.of(0, 1)).get(0);
     }
+
 
     public List<Ownership_history> getOwnership_historyByTransaction_hash(String transaction_hash) {
         return ownership_historyRepository.findByTransactionHash(transaction_hash);

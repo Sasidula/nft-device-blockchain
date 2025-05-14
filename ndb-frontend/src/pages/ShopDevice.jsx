@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Cpu,
     HardDrive,
@@ -17,23 +17,62 @@ import { IconListItem } from "../components/shared/IconList";
 import { ContactPopup } from "../components/popups/ContactPopup";
 import { ConfirmBuyPopup } from "../components/popups/ConfirmBuyPopup";
 import "../components/ShopDevice.css";
-import {Header} from "../components/Header.jsx";
-import {Footer} from "../components/Footer.jsx";
+import { Header } from "../components/Header.jsx";
+import { Footer } from "../components/Footer.jsx";
 
 export const ShopDevice = () => {
+    const [deviceData, setDeviceData] = useState(null);
     const [showContactPopup, setShowContactPopup] = useState(false);
     const [showBuyPopup, setShowBuyPopup] = useState(false);
+    const [imageSrc, setImageSrc] = useState(null);
+
+    useEffect(() => {
+        const fetchDevice = async () => {
+            const deviceId = localStorage.getItem("market index");
+            console.log("Market index:", deviceId);
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/market/${deviceId}`);
+                const data = await response.json();
+                console.log("Fetched device data:", data);
+
+                const deviceEntry = data;
+
+                if (deviceEntry?.ownership?.devices?.imageBlob) {
+                    const base64Image = deviceEntry.ownership.devices.imageBlob;
+                    setImageSrc(`data:image/jpeg;base64,${base64Image}`);
+                }
+
+                setDeviceData(deviceEntry); // Ensure deviceEntry is valid before setting
+            } catch (err) {
+                console.error("Failed to fetch device:", err);
+            }
+        };
+
+        fetchDevice();
+    }, []);
+
+
+    if (!deviceData) {
+        return <div>Loading device data...</div>;
+    }
+
+    const device = deviceData.ownership.devices;
+    const owner = device.currentOwner;
+    const warranty = device.warrantyLogs?.[0];
+    const price = deviceData.price;
+    const spec = device.spec?.[0]; // get the first spec object safely
 
     return (
         <div>
             <Header />
             <div className="shop-container">
-                <h1 className="shop-title">MacBook Pro 16</h1>
+                <h1 className="shop-title">{device.name}</h1>
 
                 <div className="shop-image-container">
                     <img
-                        src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8"
-                        alt="MacBook Pro 16"
+                        src={imageSrc}
+                        alt={device.name}
                         className="shop-image"
                     />
                 </div>
@@ -41,11 +80,11 @@ export const ShopDevice = () => {
                 <section className="shop-section">
                     <h2 className="shop-section-title">Device Information</h2>
                     <div className="shop-list">
-                        <IconListItem icon={Smartphone} label="Serial Number" value="FVFXC2LLHV2M" />
-                        <IconListItem icon={Smartphone} label="Model" value="A2141" />
-                        <IconListItem icon={Calendar} label="Purchase Date" value="March 15, 2023" />
-                        <IconListItem icon={Shield} label="Warranty" value="Active until March 15, 2025" />
-                        <IconListItem icon={DollarSign} label="Price" value="$2,499.00" showDivider={false} />
+                        <IconListItem icon={Smartphone} label="Serial Number" value={device.serialNumber} />
+                        <IconListItem icon={Smartphone} label="Model" value={device.modelNumber} />
+                        <IconListItem icon={Calendar} label="Purchase Date" value={new Date(device.purchaseDate).toDateString()} />
+                        <IconListItem icon={Shield} label="Warranty" value={warranty ? `Active until ${new Date(warranty.end_date).toDateString()}` : "No warranty"} />
+                        <IconListItem icon={DollarSign} label="Price" value={`$${price}`} showDivider={false} />
                     </div>
                     <button
                         onClick={() => setShowBuyPopup(true)}
@@ -55,14 +94,16 @@ export const ShopDevice = () => {
                     </button>
                 </section>
 
+
+
                 <section className="shop-section">
                     <h2 className="shop-section-title">Specifications</h2>
                     <div className="shop-list">
-                        <IconListItem icon={Cpu} label="Processor" value="Apple M3 Pro" />
-                        <IconListItem icon={HardDrive} label="Storage" value="512GB" />
-                        <IconListItem icon={BoxIcon} label="RAM" value="32GB" />
-                        <IconListItem icon={Monitor} label="Display" value='16" Liquid Retina XDR' />
-                        <IconListItem icon={Battery} label="Battery" value="Up to 22 hours" showDivider={false} />
+                        <IconListItem icon={Cpu} label="Processor" value={spec?.processor || "N/A"} />
+                        <IconListItem icon={HardDrive} label="Storage" value={spec?.storage || "512GB"} />
+                        <IconListItem icon={BoxIcon} label="RAM" value={spec?.ram || "Unknown"} />
+                        <IconListItem icon={Monitor} label="Display" value={spec?.display || "Unknown"} />
+                        <IconListItem icon={Battery} label="Battery" value={spec?.battery || "Unknown"} showDivider={false} />
                     </div>
                 </section>
 
@@ -71,16 +112,16 @@ export const ShopDevice = () => {
                     <div className="owner-box">
                         <div className="owner-name">
                             <User size={24} className="text-gray-500 mr-3" />
-                            <span className="font-medium">John Doe</span>
+                            <span className="font-medium">{owner.name}</span>
                         </div>
                         <div className="space-y-2 text-gray-600">
                             <div className="flex items-center">
                                 <Phone size={16} className="mr-2" />
-                                <span>+1 (555) 123-4567</span>
+                                <span>{owner.consumer?.phone || "N/A"}</span>
                             </div>
                             <div className="flex items-center">
                                 <Mail size={16} className="mr-2" />
-                                <span>john.doe@example.com</span>
+                                <span>{owner.email}</span>
                             </div>
                         </div>
                         <div className="contact-btn">
@@ -97,12 +138,13 @@ export const ShopDevice = () => {
                 <ContactPopup
                     isOpen={showContactPopup}
                     onClose={() => setShowContactPopup(false)}
-                    email="john.doe@example.com"
-                    phone="+1 (555) 123-4567"
+                    email={owner.email}
+                    phone={owner.consumer?.phone || "N/A"}
                 />
                 <ConfirmBuyPopup
                     isOpen={showBuyPopup}
                     onClose={() => setShowBuyPopup(false)}
+                    device={deviceData}
                 />
             </div>
             <Footer />

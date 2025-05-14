@@ -1,6 +1,7 @@
 package com.example.nft_device_blockchain.data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class MarketDTO {
     private boolean availability;
@@ -39,4 +40,7 @@ public class MarketDTO {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+
+
 }
