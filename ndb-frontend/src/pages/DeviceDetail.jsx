@@ -8,7 +8,8 @@ import {
     DollarSign,
     Smartphone,
     Calendar,
-    BoxIcon
+    BoxIcon,
+    Key
 } from "lucide-react"
 import { IconListItem } from "../components/shared/IconList"
 import { StatusCard } from "../components/shared/StatusCard"
@@ -25,10 +26,13 @@ export const DeviceDetail = () => {
     const [activeWarrantyPopup, setActiveWarrantyPopup] = useState(false)
     const [activeSetPricePopup, setActiveSetPricePopup] = useState(false)
     const [deviceData, setDeviceData] = useState(null)
+    const [device, setDevice] = useState(null)
+
+    const deviceId = localStorage.getItem("device index")
 
     useEffect(() => {
         const fetchDevice = async () => {
-            const deviceId = localStorage.getItem("device index")
+
             if (!deviceId) return
 
             try {
@@ -48,6 +52,25 @@ export const DeviceDetail = () => {
 
         fetchDevice()
     }, [])
+
+    useEffect(() => {
+        if (!deviceId) return
+
+        const fetchMarketDevice = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/market/device/${deviceId}`)
+                if (!response.ok) {
+                    throw new Error("Failed to fetch market device data")
+                }
+                const data = await response.json()
+                setDevice(data)
+            } catch (error) {
+                console.error("Error:", error)
+            }
+        }
+
+        fetchMarketDevice()
+    }, [deviceId])
 
     if (!deviceData) {
         return <div>Loading device details...</div>
@@ -82,6 +105,8 @@ export const DeviceDetail = () => {
             day: "numeric"
         })
         : "N/A"
+    const ownership = Array.isArray(device) ? device[0]?.ownership : device?.ownership;
+    console.log("Device ownership structure:", ownership);
 
     return (
         <div className="device-detail">
@@ -102,6 +127,14 @@ export const DeviceDetail = () => {
                         <IconListItem icon={BoxIcon} label="NFT Token" value={nftTokenId} />
                         <IconListItem icon={Smartphone} label="Model" value={modelNumber} />
                         <IconListItem icon={Calendar} label="Purchase Date" value={formattedPurchaseDate} showDivider={false} />
+                        {ownership?.publicKey && (
+                            <IconListItem
+                                icon={Key}
+                                label="Public Key"
+                                value={ownership.publicKey}
+                                showDivider={false}
+                            />
+                        )}
                     </div>
 
                     <div className="status-grid">
@@ -167,6 +200,9 @@ export const DeviceDetail = () => {
                     isOpen={activePricePopup}
                     onClose={() => setActivePricePopup(false)}
                     price={`$${originalPrice.toFixed(2)}`}
+                    releaseDate={deviceData.releaseDate}
+                    originalPrice={deviceData.originalPrice}
+                    purchaseDate={deviceData.purchaseDate}
                 />
                 <WarrantyPopup
                     isOpen={activeWarrantyPopup}

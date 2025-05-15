@@ -10,7 +10,6 @@ import {
     Card,
     Notification,
 } from "@mantine/core";
-import { IconX } from "@tabler/icons-react";
 import "./LoginCard.css";
 
 export function LoginCard() {
@@ -34,7 +33,7 @@ export function LoginCard() {
             if (response.ok) {
                 const user = await response.json(); // Assuming API returns a user object
                 localStorage.setItem("user", JSON.stringify(user)); // Save to localStorage
-                window.location.href = "/devices";
+                window.location.href = "/";
             } else {
                 // Try reading plain text message from error response
                 const errorMessage = await response.text();
@@ -57,7 +56,6 @@ export function LoginCard() {
 
                 {error && (
                     <Notification
-                        icon={<IconX size="1.1rem" />}
                         color="red"
                         title="Login Failed"
                         withCloseButton={false}

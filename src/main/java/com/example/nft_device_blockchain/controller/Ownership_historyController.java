@@ -4,7 +4,14 @@ import com.example.nft_device_blockchain.data.*;
 import com.example.nft_device_blockchain.service.DevicesService;
 import com.example.nft_device_blockchain.service.Ownership_historyService;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.crypto.Credentials;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.gas.ContractGasProvider;
+import org.web3j.tx.gas.DefaultGasProvider;
 
+import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -19,6 +26,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/history")
 public class Ownership_historyController {
+
+    Web3j web3j = Web3j.build(new HttpService("http://127.0.0.1:7545")); // e.g., Infura or Ganache
+    Credentials credentials = Credentials.create("6248768a5ca4d0513240f8c377bea44279805ca7e33b0de9a1d8444a83fefedb");
+    ContractGasProvider gasProvider = new DefaultGasProvider(); // or use a custom provider
+    SimpleNFT contract = SimpleNFT.load("DEPLOYED_CONTRACT_ADDRESS", web3j, credentials, gasProvider);
 
     private final Ownership_historyService ownership_historyService;
     private final UsersRepository usersRepository;
@@ -60,7 +72,26 @@ public class Ownership_historyController {
         //ownership.setPublicKey(dto.publicKey);
         //ownership.setPrivateKey(dto.privateKey);
 
-        ownership.setTransaction_hash(UUID.randomUUID().toString()); // Simple UUID for transaction hash
+        //ownership.setTransaction_hash(UUID.randomUUID().toString()); // Simple UUID for transaction hash
+
+        TransactionReceipt receipt = null;
+        try {
+            receipt = contract.safeTransferFrom(
+                    fromUser.getWalletAddress(),
+                    toUser.getWalletAddress(),
+                    new BigInteger(device.getNftTokenId())
+            ).send();
+
+            ownership.setTransaction_hash(receipt.getTransactionHash());
+        } catch (Exception e) {
+            // Blockchain transaction failed, log and continue
+            System.err.println("Blockchain transaction failed: " + e.getMessage());
+            ownership.setTransaction_hash("BLOCKCHAIN_FAILED_" + UUID.randomUUID()); // Fallback value
+        }
+
+        String txHash = receipt.getTransactionHash();
+        ownership.setTransaction_hash(txHash);
+
         SecureRandom secureRandom = new SecureRandom();
         byte[] keyBytes = new byte[32]; // 32 bytes for both keys
         secureRandom.nextBytes(keyBytes);
