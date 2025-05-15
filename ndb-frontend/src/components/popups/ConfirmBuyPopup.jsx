@@ -23,6 +23,9 @@ export const ConfirmBuyPopup = ({ isOpen, onClose, device }) => {
         return;
     }
 
+    const marketId = localStorage.getItem("market index");
+    console.log("Market index:", marketId);
+
     const handleConfirm = async () => {
         const userPublicKey = device.ownership.publicKey; // your localStorage key must include this
         if (publicKey !== userPublicKey) {
@@ -85,6 +88,15 @@ export const ConfirmBuyPopup = ({ isOpen, onClose, device }) => {
         };
 
         await axios.post('http://localhost:8080/api/history', ownershipPayload);
+
+        const marketPayload = {
+            availability: false,
+            price: deviceData.price,
+            deviceId: deviceData.deviceId,
+            ownershipId: deviceData.ownershipId
+        };
+
+        await axios.post(`http://localhost:8080/api/market/${marketId}`, marketPayload);
 
     };
 
